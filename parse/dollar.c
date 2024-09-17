@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:49:36 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/17 14:45:49 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:23:25 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-void	dollar_handle(t_cmd *str)
+int	dollar_handle(t_cmd *str, char *line)
 {
-	char	*line;
 	int		i;
 	int		in_quote;
 
-	line = str->line;
 	i = -1;
 	in_quote = 0;
 	while (line[++i])
@@ -43,4 +41,5 @@ void	dollar_handle(t_cmd *str)
 			printf("girmedim\n");
 		}
 	}
-
+	return (0);
+}

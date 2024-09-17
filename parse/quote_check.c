@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/13 17:13:24 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:29:07 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	quote_check(t_cmd *str)
+int	quote_check(t_cmd *str)
 {
 	str->idx = 0;
 	str->dquote_count = 0;
@@ -38,7 +38,8 @@ void	quote_check(t_cmd *str)
 		str->idx++;
 	}
 	if(str->dquote_count % 2 != 0 || str->squote_count % 2 != 0)
-		error_message("Error: There is open quote!\n"); //error mesaj fonksiyonu yazılacak!!!!!!
+		return (error_message("Error: There is open quote!\n"));
+	return (0);
 }
 
 // int	between_quote(t_cmd *str)

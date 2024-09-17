@@ -6,12 +6,13 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:23:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/17 14:18:07 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/09/17 19:07:38 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 //BU FONKSİYON SİLİNEBİLİR BAŞKA BİR FONKSİYONDA KULLANILMIYOR
+
 int	ft_wait_for_input(t_cmd *cmd)
 {
 	int	i;

@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 M_SRC = minishell.c \
 	parse/parse.c parse/quote_check.c parse/pipe.c parse/redirection.c parse/parse_utils.c parse/dollar.c\
-	builtins/env.c builtins/exit.c \
+	builtins/env.c builtins/exit.c builtins/pwd.c \
 	utils/utils.c utils/split_func.c \
 	free/free.c
 LIBSRC = libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c libft/ft_isdigit.c \
