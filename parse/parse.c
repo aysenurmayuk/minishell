@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:00:57 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/17 20:24:28 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:58:53 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ int	ft_parser(t_cmd *str)
 	if(str->line[0] == '\0')
 		return(1);
 	str->line = ft_strtrim(str->line, " ");
-	if(quote_check(str) || pipe_check(str, line) || redirection_check(str, line))
+	if(quote_check(str) || pipe_check(str, line) || redirect_check(str, line))
 	{
 		free(str->line);
 		return (1);
 	}
+	str->ncmd = ft_split2(str->line, '|');
 	ft_split_space(str);
-	redirect(str, line);
+	redirect_handle(str, line);
 	dollar_handle(str, line);
 	print_cmd(str);
 	return (0);

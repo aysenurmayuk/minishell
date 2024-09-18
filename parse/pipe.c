@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:32:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/17 18:23:49 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:01:06 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pipe_check(t_cmd *str, char *line)
 
 	in_quote = 0;
 	if (str->line[0] == '|' || str->line[ft_strlen(str->line) - 1] == '|')
-		return(error_message("Error: syntax error near unexpected token '|'\n"));
+		return(error_message("Error: Pipe syntax error\n"));
 	while(*line)
 	{
 		while (*line && (in_quote != 0 || *line == '\'' || *line == '\"'))
@@ -32,12 +32,11 @@ int	pipe_check(t_cmd *str, char *line)
 				line++;
 			if(*line == '|')
 			{
-				return(error_message("Error: syntax error near unexpected token '|'\n"));
+				return(error_message("Error: Pipe syntax error\n"));
 				break;
 			}
 		}
 		line++;		
 	}
-	str->ncmd = ft_split2(str->line, '|');
 	return (0);
 }

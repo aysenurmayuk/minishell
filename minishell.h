@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/17 20:22:05 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:58:51 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_cmd
 	bool				dquote; // " açık mı
 	bool				squote; // ' açık mı
 
+	//parse
 	char				*line; // gelen komut
 	char				**ncmd; //	pipe ile ayrılmış komutlar
 	char				***command; // komutlar
@@ -102,8 +103,8 @@ void	ft_pwd(t_cmd *str);
 int		ft_parser(t_cmd *str); 
 int		quote_check(t_cmd *str);
 int		pipe_check(t_cmd *str, char *line);
-int		redirection_check(t_cmd *str, char *line); 
-void 	redirect(t_cmd *str, char *line);
+int		redirect_check(t_cmd *str, char *line); 
+void 	redirect_handle(t_cmd *str, char *line);
 int		ft_wait_for_input(t_cmd *cmd); // heredoc için ? copilot dedi
 int		dollar_handle(t_cmd *str, char *line);
 
