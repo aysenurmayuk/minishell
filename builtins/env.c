@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/12 17:49:13 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:19:39 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,15 @@ void	print_env_list(t_env *env_list)
 	while (env_list)
 	{
 		printf("%s=%s\n", env_list->key, env_list->value);
+		env_list = env_list->next;
+	}
+}
+
+void	print_export_list(t_env *env_list)
+{
+	while (env_list)
+	{
+		printf("declare -x %s=%s\n", env_list->key, env_list->value);
 		env_list = env_list->next;
 	}
 }

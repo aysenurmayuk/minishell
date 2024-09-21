@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/18 15:58:51 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:14:40 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ typedef struct s_cmd
 	char				***command; // komutlar
 	int					pipe_count; // pipe sayısı
 
-	struct s_env		*env; // env listesi
-	struct s_env		*exp; // export listesi
-	pid_t				pid; // process id
+	struct s_env		*env;
+	struct s_env		*exp;
+	struct s_redirect	*redirect;
+	pid_t				pid;
 	//pwd
 	int					status; // exit status
 }						t_cmd;
@@ -74,14 +75,16 @@ typedef struct s_redirect
 	int					type; // 10: heredoc, 11: append, 12: input, 13: output
 	int					location; // 0: stdin, 1: stdout, 2: stderr
 	char				*data; // heredoc data
-	struct s_redirect	*prev; // önceki
-	struct s_redirect	*next; // sonraki
+	struct s_redirect	*prev;
+	struct s_redirect	*next;
 }						t_redirect;
 
 extern int				g_globals_exit;
 
 void	print_cmd(t_cmd *str); // silinecek!!
 void	print_env_list(t_env *env_list); 
+void	print_export_list(t_env *env_list);
+
 
 // env
 t_env	*create_env_node(char *key, char *value); 
@@ -98,19 +101,27 @@ int		ft_toggle_quote(char c, int in_quote);
 // builtins
 void	ft_exit(t_cmd *str); 
 void	ft_pwd(t_cmd *str);
+void	parse_env(char **envp, t_env **env_list);
+
 
 // parse
 int		ft_parser(t_cmd *str); 
-int		quote_check(t_cmd *str);
-int		pipe_check(t_cmd *str, char *line);
-int		redirect_check(t_cmd *str, char *line); 
-void 	redirect_handle(t_cmd *str, char *line);
-int		ft_wait_for_input(t_cmd *cmd); // heredoc için ? copilot dedi
+int		quote_check(t_cmd *str, char *line);
+int		pipe_check(char *line);
+int		redirect_check(char *line); 
+void 	redirect_handle(t_cmd *str);
+//int		ft_wait_for_input(t_cmd *cmd); // heredoc için ? copilot dedi
 int		dollar_handle(t_cmd *str, char *line);
 
 
 // free
 int		error_message(char *str);
-void	reset_struct(t_cmd *cmd);
+void	ft_free_command(char ***str);
+void	ft_free_ncmd(char **str);
+void	free_env_list(t_env *env_list);
+void	ft_full_free(t_cmd *str);
+
+
+
 
 #endif

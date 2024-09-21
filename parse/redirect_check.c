@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:11:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/18 15:35:12 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:11:26 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static int	check_syntax_error(char *str)
 		while (*str == ' ')
 			str++;
 		if (*str == '<' || *str == '>')
-			return (
-				error_message("Error: Redirect syntax error\n"));
+			return (error_message("Error: Redirect syntax error!\n"));
 	}
 	return (0);
 }
@@ -48,22 +47,22 @@ static int	redirect_check_helper(char *line)
 	return (0);
 }
 
-int	redirect_check(t_cmd *str, char *line)
+int	redirect_check(char *line)
 {
-	int	in_quote;
+	char	*tmp;
+	int		in_quote;
 
 	in_quote = 0;
-	if (str->line[ft_strlen(str->line) - 1] == '<'
-		|| str->line[ft_strlen(str->line) - 1] == '>')
+	tmp = line;
+	if (line[ft_strlen(line) - 1] == '<' || line[ft_strlen(line) - 1] == '>')
 		return (error_message("Error: Redirect syntax error\n"));
-	while (*line++)
+	while (*line)
 	{
-		while (*line && (in_quote != 0 || *line == '\'' || *line == '\"'))
-			in_quote = ft_toggle_quote(*line++, in_quote);
+		while (*tmp && (in_quote != 0 || *tmp == '\'' || *tmp == '\"'))
+			in_quote = ft_toggle_quote(*tmp++, in_quote);
 		if ((*line == '<' || *line == '>') && in_quote == 0)
-		{
 			return (redirect_check_helper(line));
-		}
+		line++;
 	}
 	return (0);
 }

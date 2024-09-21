@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 20:12:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/13 19:40:45 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:15:10 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_split_space(t_cmd *str)
 		{
 			while (str->idx-- > 0)
 				free(str->command[str->idx]);
-			free(str->command);
+			// free(str->command);
 			return;
 		}
 		str->idx++;

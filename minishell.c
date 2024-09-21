@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/17 19:23:52 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/09/21 18:48:43 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	reset_struct(t_cmd *cmd)
+{
+	cmd->line = NULL;
+	cmd->redirect = NULL;
+	cmd->env = NULL;
+	cmd->exp = NULL;
+	cmd->redirect = NULL;
+}
 
 static void	start_program(char **env, t_cmd *cmd)
 {
@@ -20,13 +29,23 @@ static void	start_program(char **env, t_cmd *cmd)
 		cmd->line = readline("minishell 🤯>");
 		if (!cmd->line)
 			break ;
-		if( ft_strncmp(cmd->line,"exit",5)==0){
+		if (ft_strncmp(cmd->line, "exit", 5) == 0)
+		{
 			exit(0);
 		}
-		if (cmd->line && ft_wait_for_input(cmd) == 1)
+		if (ft_strncmp(cmd->line, "env", 3) == 0)
+		{
+			print_env_list(cmd->env);
+		}
+		if (ft_strncmp(cmd->line, "export", 6) == 0)
+		{
+			print_export_list(cmd->env);
+		}
+		if (cmd->line) // alt satırları ekleme
 			add_history(cmd->line);
-		if(!ft_parser(cmd))
-			continue;;
+		ft_parser(cmd);
+		// if(!ft_parser(cmd))
+		// 	continue ;
 	}
 }
 
@@ -44,9 +63,10 @@ int	main(int ac, char **av, char **env)
 	if (!cmd)
 		return (0);
 	reset_struct(cmd);
+	// init_signal();
 	parse_env(env, &cmd->env);
 	parse_env(env, &cmd->exp);
-	// init_signal();
 	start_program(env, cmd);
-	// free fonksiyonu yazılacak!!
+	free_env_list(cmd->env);
+	free_env_list(cmd->exp);
 }

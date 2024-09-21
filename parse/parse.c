@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:00:57 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/18 15:58:53 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:13:31 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 int	ft_parser(t_cmd *str)
 {
-	char *line;
+	char	*line;
 
-	line = str->line;
-	if(str->line[0] == '\0')
-		return(1);
-	str->line = ft_strtrim(str->line, " ");
-	if(quote_check(str) || pipe_check(str, line) || redirect_check(str, line))
+	if (str->line[0] == '\0')
+		return (1);
+	line = ft_strtrim(str->line, " ");
+	if (quote_check(str, line) || pipe_check(line) || redirect_check(line))
 	{
+		free(line);
 		free(str->line);
 		return (1);
 	}
-	str->ncmd = ft_split2(str->line, '|');
+	str->ncmd = ft_split2(line, '|');
+	free(line);
+	free(str->line);
+	str->line = NULL;
 	ft_split_space(str);
-	redirect_handle(str, line);
+	redirect_handle(str);
 	dollar_handle(str, line);
 	print_cmd(str);
+	ft_full_free(str);
 	return (0);
 }
 
-void	print_cmd(t_cmd *str)// silinecek fonksiyon
+void	print_cmd(t_cmd *str) // silinecek fonksiyon
 {
 	int z;
 	int y;
