@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:54:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/13 18:58:28 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:55:38 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,3 @@ char	*ft_strndup(const char *s, size_t n)
 	dup[len] = '\0';
 	return (dup);
 }
-
