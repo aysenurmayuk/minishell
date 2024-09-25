@@ -6,11 +6,21 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:54:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/22 15:55:38 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:17:13 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}
 
 size_t	ft_strnlen(const char *src, size_t i)
 {

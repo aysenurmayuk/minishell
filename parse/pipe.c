@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:32:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 19:11:34 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:39:51 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ int	pipe_check(char *line)
 			line++;
 			if (*line == '<' || *line == '>')
 				line++;
-			while (*line == ' ')
+			while (*line && *line == ' ')
 				line++;
 			if (*line == '|')
 				return (error_message("Error: Pipe syntax error\n"));
 		}
-		line++;
+		if(*line)
+			line++;
 	}
 	return (0);
 }

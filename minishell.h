@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 19:14:40 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:03:23 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	add_env_node(t_env **env_list, char *key, char *value);
 void	parse_env(char **envp, t_env **env_list);
 
 // utils
+int		ft_strcmp(char *s1, char *s2);
 char	*ft_strndup(const char *s, size_t n);
 size_t	ft_strnlen(const char *src, size_t i);
 char	**ft_split2(char const *s, char c);

@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 20:04:10 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:07:50 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,11 @@ void	redirect_handle(t_cmd *str)
 			{
 				handle_quotes(&line, &in_quote);
 				if (check_redirect(str->command[i][j], k, in_quote))
+				{
+				printf("%d\n",in_quote);
+					printf("%s\n",str->command[i][j]);
 					k++;
+				}
 				if(str->command[i][j][k])
 					k++;
 			}

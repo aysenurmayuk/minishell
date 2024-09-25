@@ -21,8 +21,8 @@ RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(RL) $(OBJECTS)
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(READLINE)
+$(NAME): $(RL) $(SRC)
+		$(CC) $(CFLAGS) -o $(NAME) $(SRC) $(READLINE)
 $(RL):
 			@echo "Downloading the readline library"
 			@curl -O https://ftp.gnu.org/gnu/readline/readline-8.2-rc1.tar.gz
