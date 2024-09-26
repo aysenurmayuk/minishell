@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/25 15:03:23 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:25:38 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@
 # define C_PROCESS 101
 # define M_PROCESS 100
 # define HEREDOC_PROECESS 102
+
+
+// typedef struct s_node
+// {
+// 	char *node;
+// 	struct s_node next;
+// } t_node;
 
 typedef struct s_cmd
 {
@@ -112,7 +119,7 @@ int		pipe_check(char *line);
 int		redirect_check(char *line); 
 void 	redirect_handle(t_cmd *str);
 //int		ft_wait_for_input(t_cmd *cmd); // heredoc için ? copilot dedi
-int		dollar_handle(t_cmd *str, char *line);
+int		dollar_handle(t_cmd *str);
 
 
 // free

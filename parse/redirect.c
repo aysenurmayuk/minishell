@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/25 15:07:50 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:28:41 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	handle_quotes(char **line, int *in_quote)
 	}
 }
 
-void	redirect_handle(t_cmd *str)
+void	redirect_handle(t_cmd *cmd)
 {
 	int		i;
 	int		j;
@@ -60,23 +60,23 @@ void	redirect_handle(t_cmd *str)
 
 	i = -1;
 	in_quote = 0;
-	while (str->command[++i])
+	while (cmd->command[++i])
 	{
 		j = -1;
-		while (str->command[i][++j])
+		while (cmd->command[i][++j])
 		{
 			k = 0;
-			line = str->command[i][j];
-			while (str->command[i][j][k])
+			line = cmd->command[i][j];
+			while (cmd->command[i][j][k])
 			{
 				handle_quotes(&line, &in_quote);
-				if (check_redirect(str->command[i][j], k, in_quote))
+				if (check_redirect(cmd->command[i][j], k, in_quote))
 				{
 				printf("%d\n",in_quote);
-					printf("%s\n",str->command[i][j]);
+					printf("%s\n",cmd->command[i][j]);
 					k++;
 				}
-				if(str->command[i][j][k])
+				if(cmd->command[i][j][k])
 					k++;
 			}
 		}

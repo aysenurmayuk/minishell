@@ -6,34 +6,34 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:00:57 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/25 14:36:37 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:26:34 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_parser(t_cmd *str)
+int	ft_parser(t_cmd *cmd)
 {
 	char	*line;
 
-	if (str->line[0] == '\0')
+	if (cmd->line[0] == '\0')
 		return (1);
-	line = ft_strtrim(str->line, " ");
-	if (quote_check(str, line) || pipe_check(line) || redirect_check(line))
+	line = ft_strtrim(cmd->line, " ");
+	if (quote_check(cmd, line) || pipe_check(line) || redirect_check(line))
 	{
 		free(line);
-		free(str->line);
+		free(cmd->line);
 		return (1);
 	}
-	str->ncmd = ft_split2(line, '|');
+	cmd->ncmd = ft_split2(line, '|');
 	free(line);
-	free(str->line);
-	str->line = NULL;
-	ft_split_space(str);
-	redirect_handle(str);
-	dollar_handle(str, line);
-	//print_cmd(str);
-	ft_full_free(str);
+	free(cmd->line);
+	cmd->line = NULL;
+	ft_split_space(cmd);
+	redirect_handle(cmd);
+	dollar_handle(cmd);
+	//print_cmd(cmd);
+	//ft_full_free(cmd);
 	return (0);
 }
 

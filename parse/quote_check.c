@@ -6,38 +6,38 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 19:14:12 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:26:57 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	quote_check(t_cmd *str, char *line)
+int	quote_check(t_cmd *cmd, char *line)
 {
-	str->idx = 0;
-	str->dquote_count = 0;
-	str->squote_count = 0;
-	str->dquote = false;
-	str->squote = false;
-	while (line[str->idx])
+	cmd->idx = 0;
+	cmd->dquote_count = 0;
+	cmd->squote_count = 0;
+	cmd->dquote = false;
+	cmd->squote = false;
+	while (line[cmd->idx])
 	{
-		if(line[str->idx] == '\"' && str->squote != true)
+		if(line[cmd->idx] == '\"' && cmd->squote != true)
 		{
-			str->dquote = true;
-			str->dquote_count++;
-			if(str->dquote_count % 2 == 0)
-				str->dquote = false;
+			cmd->dquote = true;
+			cmd->dquote_count++;
+			if(cmd->dquote_count % 2 == 0)
+				cmd->dquote = false;
 		}
-		else if(line[str->idx] == '\'' && str->dquote != true)
+		else if(line[cmd->idx] == '\'' && cmd->dquote != true)
 		{
-			str->squote = true;
-			str->squote_count++;
-			if(str->squote_count % 2 == 0)
-				str->squote = false;
+			cmd->squote = true;
+			cmd->squote_count++;
+			if(cmd->squote_count % 2 == 0)
+				cmd->squote = false;
 		}
-		str->idx++;
+		cmd->idx++;
 	}
-	if(str->dquote_count % 2 != 0 || str->squote_count % 2 != 0)
+	if(cmd->dquote_count % 2 != 0 || cmd->squote_count % 2 != 0)
 		return (error_message("Error: There is open quote!\n"));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 20:12:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 17:15:10 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:28:28 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,28 @@ char	**ft_split2(char const *s, char c)
 	return (str);
 }
 
-void	ft_split_space(t_cmd *str)
+void	ft_split_space(t_cmd *cmd)
 {
-	str->dquote = false;
-	str->squote = false;
-	str->idx = 0;
-	str->pipe_count = 0;
-	while (str->ncmd[str->pipe_count] != NULL)
-		str->pipe_count++;
-	str->command = (char ***)malloc((str->pipe_count + 1) * sizeof(char **));
-	if (!str->command)
+	cmd->dquote = false;
+	cmd->squote = false;
+	cmd->idx = 0;
+	cmd->pipe_count = 0;
+	while (cmd->ncmd[cmd->pipe_count] != NULL)
+		cmd->pipe_count++;
+	cmd->command = (char ***)malloc((cmd->pipe_count + 1) * sizeof(char **));
+	if (!cmd->command)
 		return;
-	while (str->ncmd[str->idx])
+	while (cmd->ncmd[cmd->idx])
 	{
-		str->command[str->idx] = ft_split2(str->ncmd[str->idx], ' ');
-		if (!str->command[str->idx])
+		cmd->command[cmd->idx] = ft_split2(cmd->ncmd[cmd->idx], ' ');
+		if (!cmd->command[cmd->idx])
 		{
-			while (str->idx-- > 0)
-				free(str->command[str->idx]);
-			// free(str->command);
+			while (cmd->idx-- > 0)
+				free(cmd->command[cmd->idx]);
+			free(cmd->command);
 			return;
 		}
-		str->idx++;
+		cmd->idx++;
 	}
-	str->command[str->pipe_count] = NULL;
+	cmd->command[cmd->pipe_count] = NULL;
 }
