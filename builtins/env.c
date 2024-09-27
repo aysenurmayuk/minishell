@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 18:19:39 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:52:14 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,26 @@ void	print_env_list(t_env *env_list)
 	}
 }
 
+char	*get_env(t_cmd *cmd, char *key, char *dollar_value)
+{
+	t_env	*tmp;
+
+	tmp = cmd->env;
+	while (tmp)
+	{
+		if (ft_strcmp(key, tmp->key) == 0)
+		{
+			dollar_value = ft_strdup(tmp->value);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (!dollar_value)
+		dollar_value = ft_strdup("");
+	return (dollar_value);
+}
+
+// EXPORT'A EKLENECEK
 void	print_export_list(t_env *env_list)
 {
 	while (env_list)

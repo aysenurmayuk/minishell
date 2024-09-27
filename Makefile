@@ -5,7 +5,7 @@ M_SRC = minishell.c \
 	parse/parse.c parse/quote_check.c parse/pipe.c parse/redirect_check.c parse/redirect.c parse/parse_utils.c parse/dollar.c\
 	builtins/env.c builtins/exit.c builtins/pwd.c \
 	utils/utils.c utils/split_func.c \
-	free/free.c
+	free/free.c free/free_helper.c
 LIBSRC = libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c libft/ft_isdigit.c \
 	libft/ft_isprint.c libft/ft_itoa.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memmove.c libft/ft_memset.c \
 	libft/ft_putchar_fd.c libft/ft_putendl_fd.c libft/ft_putnbr_fd.c libft/ft_putstr_fd.c libft/ft_split.c libft/ft_strchr.c \

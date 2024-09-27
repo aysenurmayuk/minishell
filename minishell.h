@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/26 16:25:38 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:59:48 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_env
 typedef struct s_redirect
 {
 	int					type; // 10: heredoc, 11: append, 12: input, 13: output
-	int					location; // 0: stdin, 1: stdout, 2: stderr
+	int					location;
 	char				*data; // heredoc data
 	struct s_redirect	*prev;
 	struct s_redirect	*next;
@@ -105,12 +105,13 @@ size_t	ft_strnlen(const char *src, size_t i);
 char	**ft_split2(char const *s, char c);
 void	ft_split_space(t_cmd *str);
 int		ft_toggle_quote(char c, int in_quote);
+void	handle_quotes(char temp, int *squotes, int *dquotes);
 
 // builtins
 void	ft_exit(t_cmd *str); 
 void	ft_pwd(t_cmd *str);
 void	parse_env(char **envp, t_env **env_list);
-
+char	*get_env(t_cmd *cmd, char *key, char *dollar_value);
 
 // parse
 int		ft_parser(t_cmd *str); 
@@ -128,6 +129,8 @@ void	ft_free_command(char ***str);
 void	ft_free_ncmd(char **str);
 void	free_env_list(t_env *env_list);
 void	ft_full_free(t_cmd *str);
+void	free_dollar(char *dollar_before, char *dollar_after, char *dollar_value,
+		char *line);
 
 
 
