@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/25 17:58:44 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:34:41 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,10 @@ static void	start_program(char **env, t_cmd *cmd)
 		cmd->line = readline("minishell 🤯>");
 		if (!cmd->line)
 			break ;
-		if (ft_strncmp(cmd->line, "exit", 5) == 0)
-		{
-			exit(0);
-		}
-		if (ft_strncmp(cmd->line, "env", 3) == 0)
-		{
-			print_env_list(cmd->env);
-		}
-		if (ft_strncmp(cmd->line, "export", 6) == 0)
-		{
-			print_export_list(cmd->env);
-		}
+		
+		ft_parser(cmd);
 		if (cmd->line) // alt satırları ekleme
 			add_history(cmd->line);
-		ft_parser(cmd);
 		// if(!ft_parser(cmd))
 		// 	continue ;
 	}
