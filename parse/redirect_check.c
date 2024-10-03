@@ -54,8 +54,9 @@ int	redirect_check(char *line)
 
 	in_quote = 0;
 	tmp = line;
-	if (line[ft_strlen(line) - 1] == '<' || line[ft_strlen(line) - 1] == '>')
+	if (ft_strlen(line) != '\0' && (line[ft_strlen(line) - 1] == '<' || line[ft_strlen(line) - 1] == '>'))
 		return (error_message("Error: Redirect syntax error\n"));
+	
 	while (*line)
 	{
 		while (*tmp && (in_quote != 0 || *tmp == '\'' || *tmp == '\"'))

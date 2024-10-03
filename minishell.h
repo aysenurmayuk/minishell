@@ -104,6 +104,7 @@ int						special_char(char c);
 void					builtin_check(t_cmd *cmd);
 void					ft_exit(t_cmd *cmd);
 void					ft_pwd(t_cmd *str);
+void					ft_echo(t_cmd *cmd);
 void					parse_env(char **envp, t_env **env_list);
 char					*get_env(t_cmd *cmd, char *key, char *dollar_value);
 

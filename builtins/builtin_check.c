@@ -26,4 +26,8 @@ void	builtin_check(t_cmd *cmd)
 	{
 		print_export_list(cmd->env);
 	}
+	if (ft_strncmp(cmd->line, "echo", 4) == 0)
+	{
+		ft_echo(cmd);
+	}
 }

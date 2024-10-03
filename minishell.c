@@ -29,10 +29,9 @@ static void	start_program(char **env, t_cmd *cmd)
 		cmd->line = readline("minishell 🤯>");
 		if (!cmd->line)
 			break ;
-		
-		ft_parser(cmd);
 		if (cmd->line) // alt satırları ekleme
 			add_history(cmd->line);
+		ft_parser(cmd);
 		// if(!ft_parser(cmd))
 		// 	continue ;
 	}
