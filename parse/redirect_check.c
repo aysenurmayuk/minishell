@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:11:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 19:11:26 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:00:10 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,19 @@ static int	redirect_check_helper(char *line)
 int	redirect_check(char *line)
 {
 	char	*tmp;
-	int		in_quote;
+	int		sq;
+	int		dq;
 
-	in_quote = 0;
+	sq = 0;
+	dq = 0;
 	tmp = line;
 	if (ft_strlen(line) != '\0' && (line[ft_strlen(line) - 1] == '<' || line[ft_strlen(line) - 1] == '>'))
 		return (error_message("Error: Redirect syntax error\n"));
 	
 	while (*line)
 	{
-		while (*tmp && (in_quote != 0 || *tmp == '\'' || *tmp == '\"'))
-			in_quote = ft_toggle_quote(*tmp++, in_quote);
-		if ((*line == '<' || *line == '>') && in_quote == 0)
+		handle_quotes(*line, &sq, &dq);
+		if ((*line == '<' || *line == '>') && !sq && !dq)
 			return (redirect_check_helper(line));
 		line++;
 	}

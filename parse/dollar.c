@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:49:36 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/30 18:00:48 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:28:03 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	take_dollar_value(t_cmd *cmd, char **str, size_t *d, char *key)
 	*str = ft_strdup(line);
 	free_dollar(dollar_before, dollar_after, dollar_value, line);
 	free(key);
-	*d = end - 1;
+	//*d = end - 1;
 }
 
 static void	dollar_question(char **str, size_t *d)
@@ -77,10 +77,10 @@ static void	is_dollar(t_cmd *cmd, int *i, int *j, size_t d)
 	sq = 0;
 	dq = 0;
 	str = cmd->command[*i][*j];
-	while (str[d] != 0)
+	while (str[d] != '\0')
 	{
 		handle_quotes(str[d], &sq, &dq);
-		if (str[d] == '$' && sq % 2 == 0)
+		if (str[d] == '$' && !sq)
 		{
 			if (str[d + 1] == '?')
 				dollar_question(&str, &d);
