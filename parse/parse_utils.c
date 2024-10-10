@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:23:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/09 18:04:53 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/10 17:41:31 by aysenurmayu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	special_char(char c)
 {
-	if ((c >= 32 && c < 48) || (c > 57 && c < 65) || (c > 90 && c < 97)
+	if ((c >= 32 && c < 48) || (c > 57 && c < 65) || (c > 90 && c < 95)
 		|| (c > 122 && c < 127))
 		return (1);
 	return (0);

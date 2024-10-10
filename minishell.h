@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/30 18:04:30 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/10 18:38:58 by aysenurmayu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <errno.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -56,6 +57,7 @@ typedef struct s_cmd
 	char **ncmd;     //	pipe ile ayrılmış komutlar
 	char ***command; // komutlar
 	int pipe_count;  // pipe sayısı
+	char *cleaned; 
 
 	struct s_env		*env;
 	struct s_env		*exp;
@@ -105,6 +107,9 @@ void					builtin_check(t_cmd *cmd);
 void					ft_exit(t_cmd *cmd);
 void					ft_pwd(t_cmd *str);
 void					ft_echo(t_cmd *cmd);
+void					ft_cd(t_cmd *cmd);
+void 			ft_unset(t_env **env_list, char *key);
+void	ft_export(t_env **env_list, char *key_value);
 void					parse_env(char **envp, t_env **env_list);
 char					*get_env(t_cmd *cmd, char *key, char *dollar_value);
 
@@ -116,6 +121,7 @@ int						redirect_check(char *line);
 void					redirect_handle(t_cmd *str);
 // int		ft_wait_for_input(t_cmd *cmd); // heredoc için ? copilot dedi
 int						dollar_handle(t_cmd *str);
+char 					*remove_quotes(t_cmd *cmd, char *str);
 
 // free
 int						error_message(char *str);

@@ -15,7 +15,8 @@
     "ratio": "c",
     "tuple": "c",
     "utility": "c",
-    "sstream": "c"
+    "sstream": "c",
+    "minishell.h": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "clang",
   "C_Cpp_Runner.cppCompilerPath": "clang++",

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:11:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/09 18:00:10 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/10 14:34:36 by aysenurmayu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	redirect_check(char *line)
 	sq = 0;
 	dq = 0;
 	tmp = line;
-	if (ft_strlen(line) != '\0' && (line[ft_strlen(line) - 1] == '<' || line[ft_strlen(line) - 1] == '>'))
+	if (ft_strlen(tmp) != '\0' && (tmp[ft_strlen(tmp) - 1] == '<' || tmp[ft_strlen(tmp) - 1] == '>'))
 		return (error_message("Error: Redirect syntax error\n"));
 	
 	while (*line)

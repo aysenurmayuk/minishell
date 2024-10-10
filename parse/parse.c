@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:00:57 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/30 15:46:35 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/10 18:43:00 by aysenurmayu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_parser(t_cmd *cmd)
 	free(line);
 	free(cmd->line);
 	cmd->line = NULL;
-	print_cmd(cmd);
+	//print_cmd(cmd);
 	//ft_full_free(cmd);
 	return (0);
 }
