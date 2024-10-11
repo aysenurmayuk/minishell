@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:32:11 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/10 16:24:32 by aysenurmayu      ###   ########.fr       */
+/*   Updated: 2024/10/11 18:44:17 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	ft_echo(t_cmd *cmd)
 {
-	int i;
-	int n;
+	int	i;
+	int	n;
 
 	n = 1;
-	i = 1; 
-	if (cmd->command[cmd->pipe_count - 1][i] && ft_strcmp(cmd->command[cmd->pipe_count - 1][i], "-n") == 0)
+	i = 1;
+	while (cmd->command[cmd->pipe_count - 1][i]
+		&& ft_strcmp(cmd->command[cmd->pipe_count - 1][i], "-n") == 0)
 	{
+		if (i > 1 && cmd->command[cmd->pipe_count - 1][i + 1] == NULL)
+			return ;
 		n = 0;
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:34:28 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/10 19:56:55 by aysenurmayu      ###   ########.fr       */
+/*   Updated: 2024/10/11 18:42:55 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
