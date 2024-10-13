@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/13 14:43:19 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/13 16:33:06 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	print_cmd(t_cmd *str); // silinecek!!
 t_env					*create_env_node(char *key, char *value);
 void					add_env_node(t_env **env_list, char *key, char *value);
 char					*get_env(t_cmd *cmd, char *key, char *dollar_value);
-void	print_env_list(t_cmd *cmd,t_env *env_list);
-void	print_export_list(t_cmd *cmd, t_env *env_list);
+void					print_env_list(t_cmd *cmd, t_env *env_list);
+void					print_export_list(t_cmd *cmd, t_env *env_list);
 
 // utils
 int						ft_strcmp(char *s1, char *s2);
@@ -108,8 +108,8 @@ void					ft_pwd(t_cmd *str);
 void					ft_echo(t_cmd *cmd);
 void					ft_cd(t_cmd *cmd);
 void					ft_unset(t_env **env_list, char *key);
-void					ft_export(t_cmd *cmd, char *key_value);
-void					parse_env(char **envp, t_env **env_list);
+void					ft_export(t_cmd *cmd, char **key_value);
+void					parse_env(t_cmd *cmd, char **envp, t_env **env_list);
 
 // parse
 int						ft_parser(t_cmd *str);

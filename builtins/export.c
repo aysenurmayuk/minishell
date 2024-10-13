@@ -3,57 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/13 15:18:36 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/13 19:45:58 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_export(t_cmd *cmd, char *key_value)
+char	*trim_whitespace(char *str)
+{
+	while (*str && (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v'
+			|| *str == '\f' || *str == '\r'))
+		str++;
+	return (str);
+}
+
+int	is_valid_identifier(char *key)
+{
+	if (!ft_isalpha(*key) && *key != '_')
+		return (0);
+	key++;
+	while (*key)
+	{
+		if (!ft_isalnum(*key) && *key != '_')
+			return (0);
+		key++;
+	}
+	return (1);
+}
+
+void	ft_export(t_cmd *cmd, char **key_value)
 {
 	char	*delimiter;
 	char	*key;
-	t_env	*current;
 	char	*value;
+	t_env	*current;
+	int		i;
+	char	*trimmed_key_value;
 
+	i = 0;
 	value = NULL;
-	delimiter = ft_strchr(key_value, '=');
-	if (!delimiter)
+	while (key_value[++i])
 	{
-		key = ft_strndup(key_value, delimiter - key_value);
-		value = ft_strdup("");
-		add_env_node(&cmd->exp, key, value);
-		return ;
-	}
-	key = ft_strndup(key_value, delimiter - key_value);
-	value = ft_strdup(delimiter + 1);
-	current = cmd->env;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
+		trimmed_key_value = trim_whitespace(key_value[i]);
+		delimiter = ft_strchr(trimmed_key_value, '=');
+		if (delimiter)
+			key = ft_strndup(trimmed_key_value, delimiter - trimmed_key_value);
+		else
+			key = ft_strdup(trimmed_key_value);
+		if (!is_valid_identifier(key))
 		{
-			free(current->value);
-			current->value = value;
+			printf("export: `%s': not a valid identifier\n", key_value[i]);
 			free(key);
-			return ;
+			continue ;
 		}
-		current = current->next;
+		if (!delimiter)
+		{
+			current = cmd->exp;
+			value = ft_strdup("");
+			while (current)
+			{
+				if (ft_strcmp(current->key, key) == 0)
+					return ;
+				current = current->next;
+			}
+			add_env_node(&cmd->exp, key, value);
+		}
+		else
+		{
+			value = ft_strdup(trim_whitespace(delimiter + 1));
+			current = cmd->env;
+			while (current)
+			{
+				if (ft_strcmp(current->key, key) == 0)
+				{
+					 free(current->value);
+					// current->value = NULL;
+					current->value = ft_strdup(value);
+					printf("-------- %s\n",current->value);
+					printf("çıktım**\n");
+					//free(key);
+					return ;
+				}
+				current = current->next;
+			}
+			add_env_node(&cmd->env, key, value);
+			add_env_node(&cmd->exp, key, value);
+			printf("çıktım\n");
+		}
 	}
-	add_env_node(&cmd->env, key, value);
-	add_env_node(&cmd->exp, key, value);
 }
 
 void	print_export_list(t_cmd *cmd, t_env *env_list)
 {
-	while (env_list)
+	t_env	*current;
+
+	current = env_list;
+	while (current)
 	{
-		if(env_list->value != NULL && ft_strcmp(env_list->value, "") != 0)
-			printf("declare -x %s=\"%s\"\n", remove_quotes(cmd, env_list->key), remove_quotes(cmd, env_list->value));
+		if (current->value != NULL)
+		{
+			printf("valuse:%s\n",current->value);
+			// printf("key %s\n", current->key);
+			// printf("declare -x %s=\"%s\"\n", current->key, current->value);
+			
+		}
 		else
-			printf("declare -x %s\n", remove_quotes(cmd, env_list->key));
-		env_list = env_list->next;
+			printf("declare -x %s\n", remove_quotes(cmd, current->key));
+		current = current->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/13 14:42:40 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/13 16:10:01 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	add_env_node(t_env **env_list, char *key, char *value)
 }
 
 // Ortam değişkenlerini ayırma ve listeye ekleme fonksiyonu
-void	parse_env(char **envp, t_env **env_list)
+void	parse_env(t_cmd *cmd, char **envp, t_env **env_list)
 {
 	int		i;
 	char	*key;
@@ -62,8 +62,8 @@ void	parse_env(char **envp, t_env **env_list)
 		delimiter = ft_strchr(envp[i], '=');
 		if (delimiter)
 		{
-			key = ft_strndup(envp[i], delimiter - envp[i]);
-			value = ft_strdup(delimiter + 1);
+			key = ft_strndup(remove_quotes(cmd, envp[i]), delimiter - envp[i]);
+			value = ft_strdup(remove_quotes(cmd, delimiter + 1));
 			add_env_node(env_list, key, value);
 		}
 		i++;
