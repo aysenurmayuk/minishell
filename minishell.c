@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/10 18:08:58 by aysenurmayu      ###   ########.fr       */
+/*   Updated: 2024/10/13 14:15:32 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int ac, char **av, char **env)
 	reset_struct(cmd);
 	// init_signal();
 	parse_env(env, &cmd->env);
-	parse_env(env, &cmd->exp); //?
+	parse_env(env, &cmd->exp);
 	start_program(env, cmd);
 	free_env_list(cmd->env);
 	free_env_list(cmd->exp);

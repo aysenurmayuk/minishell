@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/10 17:04:30 by aysenurmayu      ###   ########.fr       */
+/*   Updated: 2024/10/13 15:16:44 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,45 +59,34 @@ char *remove_quotes(t_cmd *cmd, char *str)
 	int		dq = 0;
 	char	*cleaned;
 
-	// Initialize flags
 	cmd->idx = 0;
 	cmd->dquote = false;
 	cmd->squote = false;
-
-	// First pass: Count quotes correctly and ensure no out-of-bounds access
-	while (str[cmd->idx])
-	{
+	while (str[cmd->idx++])
 		handle_quotes(str[cmd->idx], &sq, &dq);
-		cmd->idx++;
-	}
-
-	// Allocate memory for the cleaned string
 	cleaned = (char *)malloc(sizeof(char) * (ft_strlen(str) - sq - dq + 1));
     if (!cleaned)
-        return (NULL); // Return NULL if memory allocation fails
-
-	// Second pass: Copy non-quote characters into the cleaned string
+        return (NULL);
 	while (str[i]) 
 	{
-		if (str[i] == '\"' && !cmd->squote) // Handle double quotes
+		if (str[i] == '\"' && !cmd->squote)
 		{
 			cmd->dquote_count++;
-			cmd->dquote = cmd->dquote_count % 2 == 1; // Toggle state for double quotes
+			cmd->dquote = cmd->dquote_count % 2 == 1;
 			i++;
 		}
-		else if (str[i] == '\'' && !cmd->dquote) // Handle single quotes
+		else if (str[i] == '\'' && !cmd->dquote)
 		{
 			cmd->squote_count++;
-			cmd->squote = cmd->squote_count % 2 == 1; // Toggle state for single quotes
+			cmd->squote = cmd->squote_count % 2 == 1;
 			i++;
 		}
 		else 
 		{
-            cleaned[j++] = str[i++]; // Copy non-quote characters
+            cleaned[j++] = str[i++];
         }
     }
-    cleaned[j] = '\0'; // Null-terminate the cleaned string
-
+    cleaned[j] = '\0';
     return cleaned;
 }
 

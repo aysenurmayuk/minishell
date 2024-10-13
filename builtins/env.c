@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/11 18:42:42 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/13 14:42:40 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ void	parse_env(char **envp, t_env **env_list)
 }
 
 // Bağlı listeyi yazdırma fonksiyonu (debug için)
-void	print_env_list(t_env *env_list)
+void	print_env_list(t_cmd *cmd,t_env *env_list)
 {
 	while (env_list)
 	{
-		printf("%s=%s\n", env_list->key, env_list->value);
+		printf("%s=%s\n", remove_quotes(cmd, env_list->key), remove_quotes(cmd, env_list->value));
 		env_list = env_list->next;
 	}
 }
@@ -99,12 +99,4 @@ char	*get_env(t_cmd *cmd, char *key, char *dollar_value)
 	return (dollar_value);
 }
 
-// EXPORT'A EKLENECEK
-void	print_export_list(t_env *env_list)
-{
-	while (env_list)
-	{
-		printf("declare -x %s=%s\n", env_list->key, env_list->value);
-		env_list = env_list->next;
-	}
-}
+
