@@ -6,32 +6,30 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/13 19:45:58 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/14 21:14:21 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*trim_whitespace(char *str)
+static int	search_list(t_env *list, char *key, char *value)
 {
-	while (*str && (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v'
-			|| *str == '\f' || *str == '\r'))
-		str++;
-	return (str);
-}
+	t_env	*current;
 
-int	is_valid_identifier(char *key)
-{
-	if (!ft_isalpha(*key) && *key != '_')
-		return (0);
-	key++;
-	while (*key)
+	current = list;
+	while (current)
 	{
-		if (!ft_isalnum(*key) && *key != '_')
-			return (0);
-		key++;
+		if (current->value && ft_strcmp(current->key, key) == 0)
+		{
+			printf("%s\n", current->value);
+			free(current->value);
+			current->value = ft_strdup(value);
+			printf("%s\n", current->value);
+			return (1);
+		}
+		current = current->next;
 	}
-	return (1);
+	return (0);
 }
 
 void	ft_export(t_cmd *cmd, char **key_value)
@@ -39,59 +37,43 @@ void	ft_export(t_cmd *cmd, char **key_value)
 	char	*delimiter;
 	char	*key;
 	char	*value;
-	t_env	*current;
+	char	*trimmed_quote;
 	int		i;
-	char	*trimmed_key_value;
+	int		flag;
 
-	i = 0;
-	value = NULL;
-	while (key_value[++i])
+	i = 1;
+	while (key_value[i] != NULL)
 	{
-		trimmed_key_value = trim_whitespace(key_value[i]);
-		delimiter = ft_strchr(trimmed_key_value, '=');
-		if (delimiter)
-			key = ft_strndup(trimmed_key_value, delimiter - trimmed_key_value);
-		else
-			key = ft_strdup(trimmed_key_value);
-		if (!is_valid_identifier(key))
+		trimmed_quote = remove_quotes(cmd, key_value[i]);
+		if (trimmed_quote && !ft_isalpha(trimmed_quote[0])
+			&& trimmed_quote[0] != '_')
 		{
-			printf("export: `%s': not a valid identifier\n", key_value[i]);
-			free(key);
-			continue ;
+			printf("minishell: export: `%s': not a valid identifier\n",
+				key_value[i]);
+			i++;
 		}
-		if (!delimiter)
+		if (trimmed_quote)
 		{
-			current = cmd->exp;
-			value = ft_strdup("");
-			while (current)
+			delimiter = ft_strchr(trimmed_quote, '=');
+			if (delimiter)
 			{
-				if (ft_strcmp(current->key, key) == 0)
-					return ;
-				current = current->next;
-			}
-			add_env_node(&cmd->exp, key, value);
-		}
-		else
-		{
-			value = ft_strdup(trim_whitespace(delimiter + 1));
-			current = cmd->env;
-			while (current)
-			{
-				if (ft_strcmp(current->key, key) == 0)
+				key = ft_strndup(trimmed_quote, delimiter - trimmed_quote);
+				value = ft_strdup(delimiter + 1);
+				flag = search_list(cmd->env, key, value);
+				if (flag == 0)
 				{
-					 free(current->value);
-					// current->value = NULL;
-					current->value = ft_strdup(value);
-					printf("-------- %s\n",current->value);
-					printf("çıktım**\n");
-					//free(key);
-					return ;
+					add_env_node(&cmd->env, key, value);
+					add_env_node(&cmd->exp, key, value);
 				}
-				current = current->next;
 			}
-			add_env_node(&cmd->env, key, value);
-			add_env_node(&cmd->exp, key, value);
-			printf("çıktım\n");
+			else if (!delimiter)
+			{
+				key = ft_strdup(trimmed_quote);
+				flag = search_list(cmd->exp, key, NULL);
+				if (flag == 0)
+					add_env_node(&cmd->exp, key, NULL);
+			}
+			i++;
 		}
 	}
 }
@@ -104,12 +86,8 @@ void	print_export_list(t_cmd *cmd, t_env *env_list)
 	while (current)
 	{
 		if (current->value != NULL)
-		{
-			printf("valuse:%s\n",current->value);
-			// printf("key %s\n", current->key);
-			// printf("declare -x %s=\"%s\"\n", current->key, current->value);
-			
-		}
+			// printf("%s\n", current->value);
+			printf("declare -x %s=\"%s\"\n", current->key, current->value);
 		else
 			printf("declare -x %s\n", remove_quotes(cmd, current->key));
 		current = current->next;

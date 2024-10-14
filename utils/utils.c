@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:54:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/13 18:13:26 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/14 21:15:49 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,11 @@ char	*ft_strndup(const char *s, size_t n)
 	ft_memcpy(dup, s, len);
 	dup[len] = '\0';
 	return (dup);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
 }

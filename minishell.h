@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/13 16:33:06 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/14 21:17:07 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
+# include <ctype.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -75,10 +76,8 @@ typedef struct s_env
 
 typedef struct s_redirect
 {
-	int type; // 10: heredoc, 11: append, 12: input, 13: output
-	int					location;
-	char *data; // heredoc data
-	struct s_redirect	*prev;
+	int 				type; // 10: heredoc, 11: append, 12: input, 13: output
+	char				*filename;
 	struct s_redirect	*next;
 }						t_redirect;
 
@@ -95,6 +94,7 @@ void					print_export_list(t_cmd *cmd, t_env *env_list);
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strndup(const char *s, size_t n);
 size_t					ft_strnlen(const char *src, size_t i);
+int						ft_isspace(char c);
 char					**ft_split2(char const *s, char c);
 void					ft_split_space(t_cmd *str);
 int						ft_toggle_quote(char c, int in_quote);
