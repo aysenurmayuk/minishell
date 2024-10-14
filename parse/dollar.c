@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:49:36 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/09 18:28:03 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/14 21:07:41 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,16 @@ static char	*dollar_line(char *dollar_before, char *dollar_after,
 {
 	char	*line;
 	char	*temp;
-
 	if (!dollar_value)
-		line = ft_strjoin(dollar_before, dollar_after);
-	else
-	{
-		temp = ft_strjoin(dollar_before, dollar_value);
-		line = ft_strjoin(temp, dollar_after);
-		free(temp);
-	}
+		dollar_value = ft_strdup("");
+
+	temp = ft_strjoin(dollar_before, dollar_value);
+	line = ft_strjoin(temp, dollar_after);
+	free(temp);
+
 	return (line);
 }
+
 
 static void	take_dollar_value(t_cmd *cmd, char **str, size_t *d, char *key)
 {
@@ -43,6 +42,9 @@ static void	take_dollar_value(t_cmd *cmd, char **str, size_t *d, char *key)
 		end++;
 	key = ft_substr(*str, (*(d) + 1), (end - (*(d) + 1)));
 	dollar_value = get_env(cmd, key, NULL);
+	dollar_value = get_env(cmd, key, NULL);
+	if (!dollar_value)
+		dollar_value = ft_strdup(""); // NULL ise boş string ata
 	dollar_after = ft_substr(*str, end, ft_strlen(*str + end));
 	line = dollar_line(dollar_before, dollar_after, dollar_value);
 	free(*str);
@@ -70,30 +72,37 @@ static void	dollar_question(char **str, size_t *d)
 
 static void	is_dollar(t_cmd *cmd, int *i, int *j, size_t d)
 {
-	int		sq;
-	int		dq;
-	char	*str;
+    int		sq;
+    int		dq;
+    char		*str;
+	int dollar_count = 0;
 
-	sq = 0;
-	dq = 0;
-	str = cmd->command[*i][*j];
-	while (str[d] != '\0')
-	{
-		handle_quotes(str[d], &sq, &dq);
-		if (str[d] == '$' && !sq)
-		{
-			if (str[d + 1] == '?')
-				dollar_question(&str, &d);
-			else
-				take_dollar_value(cmd, &str, &d, NULL);
-		}
-		if (ft_strlen(str) <= d)
-			break ;
-		else
-			d++;
-	}
-	cmd->command[*i][*j] = str;
+    sq = 0;
+    dq = 0;
+    str = cmd->command[*i][*j];
+    while (str[d] != '\0')
+    {
+        handle_quotes(str[d], &sq, &dq);
+        if (str[d] == '$' && !sq)
+        {
+			// dollar_count++;
+			// if (dollar_count % 2 == 0)
+			// 	printf("dollar_count: %d\n", dollar_count);	
+            if (str[d + 1] == '?')
+                dollar_question(&str, &d);
+            else
+                take_dollar_value(cmd, &str, &d, NULL);
+			if(str[d] == '$')
+				continue;
+        }
+        if (ft_strlen(str) <= d)
+            break ;
+        else
+            d++;
+    }
+    cmd->command[*i][*j] = str;
 }
+
 
 int	dollar_handle(t_cmd *cmd)
 {
