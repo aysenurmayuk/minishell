@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/14 21:13:33 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:37:17 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // Bağlı listeyi yazdırma fonksiyonu (debug için)
-static void	print_redirect_list(t_redirect *redirect_list)
-{
-	while (redirect_list)
-	{
-		printf("%d = %s\n", redirect_list->type, redirect_list->filename);
-		redirect_list = redirect_list->next;
-	}
-}
+// static void	print_redirect_list(t_redirect *redirect_list)
+// {
+// 	while (redirect_list)
+// 	{
+// 		printf("%d = %s\n", redirect_list->type, redirect_list->filename);
+// 		redirect_list = redirect_list->next;
+// 	}
+// }
 
 static t_redirect	*create_redirect_node(int type, char *filename)
 {

@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:49:36 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/14 21:07:41 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/18 16:36:52 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	is_dollar(t_cmd *cmd, int *i, int *j, size_t d)
     int		sq;
     int		dq;
     char		*str;
-	int dollar_count = 0;
+	// int dollar_count = 0;
 
     sq = 0;
     dq = 0;

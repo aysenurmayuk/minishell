@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:34:28 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/13 16:38:52 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:36:36 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ void	builtin_check(t_cmd *cmd)
 	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "export") == 0 && cmd->command[0][1] == NULL)
 		print_export_list(cmd, cmd->exp);
 	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "export") == 0 && cmd->command[0][1] != NULL)
-		ft_export(cmd, cmd->command[0]);
+		ft_export(cmd, cmd->command[0], NULL);
 }
