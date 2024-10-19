@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:00:57 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/14 19:40:42 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/19 17:24:21 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_parser(t_cmd *cmd)
 	free(line);
 	free(cmd->line);
 	cmd->line = NULL;
-	print_cmd(cmd);
+	//print_cmd(cmd);
 	//ft_full_free(cmd);
 	return (0);
 }

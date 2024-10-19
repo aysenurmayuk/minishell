@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:37 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/13 17:08:26 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/19 15:38:11 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 void	ft_unset(t_env **env_list, char *key)
 {
+	t_env	*prev;
 	t_env	*current;
-	t_env	*previous;
 
+	if (!key || !*env_list)
+		return ;
 	current = *env_list;
-	previous = NULL;
+	prev = NULL;
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			if (previous)
-				previous->next = current->next;
+			if (prev)
+				prev->next = current->next;
 			else
 				*env_list = current->next;
-			free(current->key);
-			if(current->value != NULL)
-				free(current->value);
+			//free(current->key);
+			//free(current->value);
 			free(current);
 			return ;
 		}
-		previous = current;
+		prev = current;
 		current = current->next;
 	}
 }

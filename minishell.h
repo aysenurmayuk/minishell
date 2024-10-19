@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/18 16:36:28 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/19 15:10:01 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void					ft_echo(t_cmd *cmd);
 void					ft_cd(t_cmd *cmd);
 void					ft_unset(t_env **env_list, char *key);
 void	ft_export(t_cmd *cmd, char **key_value, char *trimmed_quote);
+
+
 void					parse_env(t_cmd *cmd, char **envp, t_env **env_list);
 
 // parse
