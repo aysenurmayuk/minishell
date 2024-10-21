@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:32:11 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/11 18:44:17 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/21 19:15:50 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(t_cmd *cmd)
+void	ft_echo(t_cmd *cmd, t_executor *executor)
 {
 	int	i;
 	int	n;
+	int	fd;
 
 	n = 1;
 	i = 1;
+	fd = executor->files->fd_output;
 	while (cmd->command[cmd->pipe_count - 1][i]
 		&& ft_strcmp(cmd->command[cmd->pipe_count - 1][i], "-n") == 0)
 	{
@@ -29,11 +31,14 @@ void	ft_echo(t_cmd *cmd)
 	}
 	while (cmd->command[cmd->pipe_count - 1][i])
 	{
-		printf("%s", remove_quotes(cmd, cmd->command[cmd->pipe_count - 1][i]));
+		write(fd, remove_quotes(cmd, cmd->command[cmd->pipe_count - 1][i]),
+			ft_strlen(remove_quotes(cmd, cmd->command[cmd->pipe_count
+					- 1][i])));
 		if (cmd->command[cmd->pipe_count - 1][i + 1])
-			printf(" ");
+			write(fd, " ", 1);
 		i++;
 	}
 	if (n)
-		printf("\n");
+		write(fd, "\n", 1);
+	cmd->status = 0;
 }

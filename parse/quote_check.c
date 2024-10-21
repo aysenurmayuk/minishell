@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kubra <kubra@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/13 15:16:44 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/15 16:26:01 by kubra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ char *remove_quotes(t_cmd *cmd, char *str)
 	while (str[cmd->idx++])
 		handle_quotes(str[cmd->idx], &sq, &dq);
 	cleaned = (char *)malloc(sizeof(char) * (ft_strlen(str) - sq - dq + 1));
-    if (!cleaned)
-        return (NULL);
+    // if (!cleaned)
+    //     return (NULL);
 	while (str[i]) 
 	{
 		if (str[i] == '\"' && !cmd->squote)

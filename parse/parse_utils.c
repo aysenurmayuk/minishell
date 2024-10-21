@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:23:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/10 17:41:31 by aysenurmayu      ###   ########.fr       */
+/*   Updated: 2024/10/21 18:54:36 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,36 @@ int	special_char(char c)
 	return (0);
 }
 
-// //BU FONKSİYON SİLİNEBİLİR BAŞKA BİR FONKSİYONDA KULLANILMIYOR
+void	sep_path(t_cmd *cmd)
+{
+	t_env	*tmp;
 
-// int	ft_wait_for_input(t_cmd *cmd)
-// {
-// 	int	i;
+	tmp = cmd->env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->key, "PATH", ft_strlen(tmp->key)) == 0)
+		{
+			cmd->sep_path = ft_split(tmp->value, ':');
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	cmd->sep_path = ft_split("", ':');
+}
 
-// 	i = 0;
-// 	if (!cmd->line)
-// 		return (2);
-// 	while (cmd->line[i])
-// 	{
-// 		if ((cmd->line[i] != 10) && (cmd->line[i] != 32))
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+int	wait_for_input(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd->line)
+		return (2);
+	while (cmd->line[i])
+	{
+		if ((cmd->line[i] != 10) && (cmd->line[i] != 32))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+

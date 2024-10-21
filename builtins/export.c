@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/19 18:20:40 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/21 20:45:25 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int	search_list(t_env **list, char *key, char *value)
 	return (0);
 }
 
-
 void	ft_export(t_cmd *cmd, char **key_value, char *trimmed_quote)
 {
 	char	*delimiter;
@@ -48,12 +47,12 @@ void	ft_export(t_cmd *cmd, char **key_value, char *trimmed_quote)
 		trimmed_quote = remove_quotes(cmd, key_value[i]);
 		if (trimmed_quote && !ft_isalpha(trimmed_quote[0])
 			&& trimmed_quote[0] != '_')
-			{
-				printf("minishell: export: `%s': not a valid identifier\n",
-					key_value[i]);
-				i++;
-				continue ;
-			}
+		{
+			printf("minishell: export: `%s': not a valid identifier\n",
+				key_value[i]);
+			i++;
+			continue ;
+		}
 		if (trimmed_quote)
 		{
 			delimiter = ft_strchr(trimmed_quote, '=');
@@ -89,7 +88,7 @@ void	ft_export(t_cmd *cmd, char **key_value, char *trimmed_quote)
 
 void	print_export_list(t_cmd *cmd, t_env *env_list)
 {
-	t_env *current;
+	t_env	*current;
 
 	current = env_list;
 	while (current)

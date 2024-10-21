@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 18:12:12 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/21 16:26:34 by kgulfida         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:17:20 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char	*str;
 
 	i = 0;
-	
 	if (!s1 || !set)
 		return (ft_strdup(s1));
 	while (s1[i] && ft_check(*(s1 + i), set))
@@ -46,8 +45,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 		while (len != 0 && ft_check(*(s1 + (len - 1)), set))
 			len--;
 		str = ft_substr(s1, i, len - i);
-
 	}
-	
 	return (str);
 }

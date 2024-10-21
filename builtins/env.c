@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/19 15:33:38 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/21 20:47:11 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ void	parse_env(t_cmd *cmd, char **envp, t_env **env_list)
 }
 
 // Bağlı listeyi yazdırma fonksiyonu (debug için)
-void	print_env_list(t_cmd *cmd,t_env *env_list)
+void	print_env_list(t_cmd *cmd, t_env *env_list)
 {
 	while (env_list)
 	{
-		printf("%s=%s\n", remove_quotes(cmd, env_list->key), remove_quotes(cmd, env_list->value));
+		printf("%s=%s\n", remove_quotes(cmd, env_list->key), remove_quotes(cmd,
+				env_list->value));
 		env_list = env_list->next;
 	}
 }
@@ -98,5 +99,3 @@ char	*get_env(t_cmd *cmd, char *key, char *dollar_value)
 		dollar_value = ft_strdup("");
 	return (dollar_value);
 }
-
-

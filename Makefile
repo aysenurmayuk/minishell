@@ -1,11 +1,12 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 M_SRC = minishell.c \
-	parse/parse.c parse/quote_check.c parse/pipe.c parse/redirect_check.c parse/redirect.c parse/parse_utils.c parse/dollar.c\
-	builtins/env.c builtins/exit.c builtins/pwd.c builtins/builtin_check.c builtins/echo.c builtins/cd.c builtins/export.c builtins/unset.c\
-	utils/utils.c utils/split_func.c \
-	free/free.c free/free_helper.c
+	parse/dollar.c parse/parse_utils.c parse/parse.c parse/pipe.c parse/prep_for_exec.c parse/prep_for_exec_2.c  parse/quote_check.c parse/redirect_check.c parse/redirect_utils.c parse/redirect_utils_2.c parse/redirect.c \
+	builtins/env.c builtins/exit.c builtins/pwd.c builtins/builtin_check.c builtins/echo.c builtins/cd.c builtins/export.c builtins/unset.c \
+	utils/utils.c utils/split_func.c utils/gnl.c \
+	free/free.c free/free_2.c free/error.c\
+	executor/exec.c executor/exec_utils.c
 LIBSRC = libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c libft/ft_isdigit.c \
 	libft/ft_isprint.c libft/ft_itoa.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memmove.c libft/ft_memset.c \
 	libft/ft_putchar_fd.c libft/ft_putendl_fd.c libft/ft_putnbr_fd.c libft/ft_putstr_fd.c libft/ft_split.c libft/ft_strchr.c \

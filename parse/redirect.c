@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/18 16:37:17 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/21 19:43:22 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// Bağlı listeyi yazdırma fonksiyonu (debug için)
-// static void	print_redirect_list(t_redirect *redirect_list)
-// {
-// 	while (redirect_list)
-// 	{
-// 		printf("%d = %s\n", redirect_list->type, redirect_list->filename);
-// 		redirect_list = redirect_list->next;
-// 	}
-// }
 
 static t_redirect	*create_redirect_node(int type, char *filename)
 {
@@ -54,17 +44,13 @@ static void	add_redirect_node(t_redirect **redirects, int type, char *filename)
 	}
 }
 
-static char	*extract_filename(char *str)
+static char	*extract_filename(char *str, int sq, int dq)
 {
 	char	*filename;
 	int		start;
 	int		end;
-	int		sq;
-	int		dq;
 
 	start = 0;
-	sq = 0;
-	dq = 0;
 	while (str[start] && ft_isspace(str[start]))
 		start++;
 	end = start;
@@ -84,24 +70,24 @@ static char	*extract_filename(char *str)
 	return (filename);
 }
 
-static int	redirect_type(t_cmd *cmd, char *str, int k)
+static int	redirect_type(t_cmd *cmd, char *str, int r)
 {
 	int	type;
 
 	(void)cmd;
 	type = 0;
-	if (str[k] == '>' && str[k + 1] == '>')
+	if (str[r] == '>' && str[r + 1] == '>')
 		type = APPEND;
-	else if (str[k] == '<' && str[k + 1] == '<')
+	else if (str[r] == '<' && str[r + 1] == '<')
 		type = HEREDOC;
-	else if (str[k] == '>')
+	else if (str[r] == '>')
 		type = OUTPUT;
-	else if (str[k] == '<')
+	else if (str[r] == '<')
 		type = INPUT;
 	return (type);
 }
 
-static void	is_redirect(t_cmd *cmd, int *i, int *j, size_t d)
+static void	is_redirect(t_cmd *cmd, int *i, int *j, size_t r)
 {
 	int		sq;
 	int		dq;
@@ -111,33 +97,27 @@ static void	is_redirect(t_cmd *cmd, int *i, int *j, size_t d)
 
 	sq = 0;
 	dq = 0;
+	type = 0;
 	filename = NULL;
 	str = cmd->command[*i][*j];
-	while (str[d] != 0)
+	while (str[r] != 0)
 	{
-		handle_quotes(str[d], &sq, &dq);
-		if ((str[d] == '<' || str[d] == '>') && sq % 2 == 0 && dq % 2 == 0)
+		handle_quotes(str[r], &sq, &dq);
+		if ((str[r] == '<' || str[r] == '>') && sq % 2 == 0 && dq % 2 == 0)
 		{
-			type = redirect_type(cmd, str, d);
-			if (str[d + 1] == '<' || str[d + 1] == '>')
-				d++;
-			if (str[d + 1] != '\0')
-			{
-				if ((type == APPEND || type == HEREDOC) && str[d + 1] != '\0')
-					filename = extract_filename(str + d + 1);
-				else if ((type == OUTPUT || type == INPUT) && str[d
-					+ 1] != '\0')
-					filename = extract_filename(str + d + 1);
-			}
+			type = redirect_type(cmd, str, r);
+			if (str[r + 1] == '<' || str[r + 1] == '>')
+				r++;
+			if (str[r + 1] != '\0')
+				filename = extract_filename(str + r + 1, 0, 0);
 			else
-				filename = extract_filename(cmd->command[*i][*j + 1]);
+				filename = extract_filename(cmd->command[*i][*j + 1], 0, 0);
 			add_redirect_node(&cmd->redirect, type, remove_quotes(cmd,
-					filename));
+						filename));
 		}
-		if (ft_strlen(str) <= d)
+		if (ft_strlen(str) <= r)
 			break ;
-		else
-			d++;
+		r++;
 	}
 	cmd->command[*i][*j] = str;
 }
@@ -153,5 +133,7 @@ void	redirect_handle(t_cmd *cmd)
 		j = -1;
 		while (cmd->command[i][++j])
 			is_redirect(cmd, &i, &j, 0);
+		if (cmd->redirect != NULL)
+			cmd->executor->files = init_redirect(cmd, cmd->executor->files);
 	}
 }

@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 18:42:37 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/21 20:46:10 by kgulfida         ###   ########.fr       */
+/*   Created: 2024/10/20 17:15:29 by kgulfida          #+#    #+#             */
+/*   Updated: 2024/10/21 15:50:21 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_unset(t_env **env_list, char *key)
+int	error_message(char *str)
 {
-	t_env	*prev;
-	t_env	*current;
+	printf("%s", str);
+	return (1);
+}
 
-	if (!key || !*env_list)
-		return ;
-	current = *env_list;
-	prev = NULL;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-		{
-			if (prev)
-				prev->next = current->next;
-			else
-				*env_list = current->next;
-			//free(current->key);
-			//free(current->value);
-			free(current);
-			return ;
-		}
-		prev = current;
-		current = current->next;
-	}
+void	executer_error(char **cmd, char *s, int exit_code)
+{
+	write(2, "minishell: ", ft_strlen("minishell: "));
+	write(2, cmd[0], ft_strlen(cmd[0]));
+	write(2, ":", 1);
+	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
+	exit(exit_code);
 }

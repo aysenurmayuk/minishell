@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_check.c                                    :+:      :+:    :+:   */
+/*   builtin_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:34:28 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/19 15:23:15 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/17 14:12:53 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_check(t_cmd *cmd)
+void	builtin_handle(t_cmd *cmd, t_executor *executor)
 {
 	if (cmd->command == NULL || cmd->command[0] == NULL)
 		return ;
 	cmd->cleaned = cmd->command[0][0];
 	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "exit") == 0)
 		ft_exit(cmd);
-	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "env") == 0 ||
-		ft_strcmp(remove_quotes(cmd, cmd->cleaned), "ENV") == 0)
+	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "env") == 0
+		|| ft_strcmp(remove_quotes(cmd, cmd->cleaned), "ENV") == 0)
 		print_env_list(cmd, cmd->env);
 	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "echo") == 0)
-		ft_echo(cmd);
+		ft_echo(cmd, executor);
 	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "cd") == 0)
 		ft_cd(cmd);
 	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "pwd") == 0)
@@ -40,4 +40,26 @@ void	builtin_check(t_cmd *cmd)
 		ft_unset(&cmd->env, cmd->command[0][1]);
 		ft_unset(&cmd->exp, cmd->command[0][1]);
 	}
+}
+
+int	builtin_check(t_cmd *cmd)
+{
+	cmd->cleaned = cmd->command[0][0];
+	if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "exit") == 0)
+		return (1);
+	else if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "env") == 0
+		|| ft_strcmp(remove_quotes(cmd, cmd->cleaned), "ENV") == 0)
+		return (2);
+	else if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "echo") == 0)
+		return (3);
+	else if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "cd") == 0)
+		return (4);
+	else if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "pwd") == 0)
+		return (5);
+	else if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "unset") == 0)
+		return (6);
+	else if (ft_strcmp(remove_quotes(cmd, cmd->cleaned), "export") == 0)
+		return (7);
+	else
+		return (0);
 }

@@ -6,11 +6,25 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:54:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/14 21:15:49 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/20 12:57:46 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ft_strcpy(char *dest, const char *src)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -49,7 +63,8 @@ char	*ft_strndup(const char *s, size_t n)
 
 int	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r')
 		return (1);
 	return (0);
 }

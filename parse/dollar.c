@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:49:36 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/18 17:57:13 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/21 21:17:47 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static void	dollar_question(char **str, size_t *d)
 	char	*dollar_value;
 	char	*line;
 
-	
 	dollar_before = ft_substr(*str, 0, (*d));
 	dollar_value = ft_itoa(g_globals_exit);
 	dollar_after = ft_substr(*str, (*d) + 2, ft_strlen((*str) + (*d) + 2));
@@ -71,9 +70,7 @@ static void	is_dollar(t_cmd *cmd, int *i, int *j, size_t d)
 	int		sq;
 	int		dq;
 	char	*str;
-	int		dollar_count;
 
-	dollar_count = 0;
 	sq = 0;
 	dq = 0;
 	str = cmd->command[*i][*j];

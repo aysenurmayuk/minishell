@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_helper.c                                      :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 14:45:22 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/27 14:47:24 by kgulfida         ###   ########.fr       */
+/*   Created: 2023/12/17 14:28:57 by kgulfida          #+#    #+#             */
+/*   Updated: 2023/12/17 14:54:45 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	free_dollar(char *dollar_before, char *dollar_after, char *dollar_value,
-		char *line)
+t_list	*ft_lstlast(t_list *lst)
 {
-	free(line);
-	free(dollar_before);
-	free(dollar_after);
-	free(dollar_value);
+	if (!lst)
+		return (0);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }
