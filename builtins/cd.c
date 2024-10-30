@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:48 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/21 20:45:53 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:21:10 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ static void	change_to_home(t_cmd *cmd)
 	if (home)
 	{
 		if (chdir(home) != 0)
+		{
 			printf("cd: %s: %s\n", home, strerror(errno));
+			cmd->status = 1;
+		}
+		else
+			cmd->status = 0;
 	}
 }
 
@@ -50,20 +55,28 @@ static void	update_pwd(t_cmd *cmd, char *oldpwd)
 	{
 		update_env_var(&(cmd->env), "OLDPWD", oldpwd);
 		update_env_var(&(cmd->env), "PWD", cwd);
+		update_env_var(&(cmd->exp), "OLDPWD", oldpwd);
+		update_env_var(&(cmd->exp), "PWD", cwd);
 	}
 	else
+	{
 		printf("cd: error retrieving current directory: %s\n", strerror(errno));
+		cmd->status = 1;
+	}
 }
 
 void	ft_cd(t_cmd *cmd)
 {
-	char	*oldpwd;
+	char *oldpwd;
 
 	oldpwd = get_env(cmd, "PWD", NULL);
 	if (!cmd->command[0][1] || ft_strcmp(cmd->command[0][1], "~") == 0)
 		change_to_home(cmd);
 	else if (chdir(cmd->command[0][1]) != 0)
+	{
 		printf("cd: %s: %s\n", cmd->command[0][1], strerror(errno));
+		cmd->status = 1;
+	}
 	update_pwd(cmd, oldpwd);
 	free(oldpwd);
 }

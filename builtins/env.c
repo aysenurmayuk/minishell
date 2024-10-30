@@ -6,11 +6,12 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 20:47:11 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:13:20 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 // Yeni bir ortam değişkeni düğümü oluşturma fonksiyonu
 t_env	*create_env_node(char *key, char *value)
@@ -46,7 +47,6 @@ void	add_env_node(t_env **env_list, char *key, char *value)
 	temp->next = new_node;
 }
 
-// Ortam değişkenlerini ayırma ve listeye ekleme fonksiyonu
 void	parse_env(t_cmd *cmd, char **envp, t_env **env_list)
 {
 	int		i;
@@ -70,16 +70,28 @@ void	parse_env(t_cmd *cmd, char **envp, t_env **env_list)
 	}
 }
 
-// Bağlı listeyi yazdırma fonksiyonu (debug için)
-void	print_env_list(t_cmd *cmd, t_env *env_list)
+void	print_env_list(t_cmd *cmd, t_env *env_list, t_executor *executor)
 {
+	char	*key;
+	char	*value;
+	int		fd;
+
+	fd = executor->files->fd_output;
 	while (env_list)
 	{
-		printf("%s=%s\n", remove_quotes(cmd, env_list->key), remove_quotes(cmd,
-				env_list->value));
+		key = remove_quotes(cmd, env_list->key);
+		value = remove_quotes(cmd, env_list->value);
+		write(fd, key, ft_strlen(key));
+		write(fd, "=", 1);
+		write(fd, value, ft_strlen(value));
+		write(fd, "\n", 1);
+		free(key);
+		free(value);
 		env_list = env_list->next;
 	}
+	cmd->status = 0;
 }
+
 
 char	*get_env(t_cmd *cmd, char *key, char *dollar_value)
 {

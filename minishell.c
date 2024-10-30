@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 21:08:00 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:34:29 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ static void	reset_struct(t_cmd *cmd)
 	cmd->line = NULL;
 	cmd->ncmd = NULL;
 	cmd->command = NULL;
-	cmd->redirect = NULL;
 	cmd->cleaned = NULL;
 	cmd->sep_path = NULL;
 	cmd->env = NULL;
 	cmd->exp = NULL;
 	cmd->executor = NULL;
-	cmd->redirect = NULL;
+	cmd->status = 0;
 }
 
 static void	start_program(char **env, t_cmd *cmd)
@@ -38,10 +37,9 @@ static void	start_program(char **env, t_cmd *cmd)
 		if (cmd->line && wait_for_input(cmd) == 1)
 			add_history(cmd->line);
 		ft_parser(cmd);
-		// if(ft_parser(cmd))
-		// 	continue ;
 		ft_executor(cmd, 0);
-		free_redirect(&cmd->redirect);
+		//free_redirect(&cmd->executor->redirect);
+		free_double(cmd->sep_path);
 	}
 }
 
@@ -59,7 +57,7 @@ int	main(int ac, char **av, char **env)
 	if (!cmd)
 		return (0);
 	reset_struct(cmd);
-	// init_signal();
+	signal_init();
 	parse_env(cmd, env, &cmd->env);
 	parse_env(cmd, env, &cmd->exp);
 	start_program(env, cmd);

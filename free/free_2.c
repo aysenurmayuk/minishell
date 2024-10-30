@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 14:45:22 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 16:03:06 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:37:12 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,12 @@ void	free_redirect(t_redirect **redirect)
 
 static void	free_files(t_files *files)
 {
-	if(files->heredoc)
+	if (files->heredoc)
 		free(files->heredoc);
+	if (files->fd_input > 2)
+		close(files->fd_input);
+	if (files->fd_output > 2)
+		close(files->fd_output);
 	free(files->output);
 	free(files->input);
 	free(files);
@@ -63,9 +67,7 @@ static void	free_files(t_files *files)
 void	free_executor(t_executor **executor)
 {
 	t_executor	*temp;
-	int			i;
 
-	i = -1;
 	while (*executor)
 	{
 		temp = *executor;

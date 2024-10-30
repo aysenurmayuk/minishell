@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kubra <kubra@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/15 16:26:01 by kubra            ###   ########.fr       */
+/*   Updated: 2024/10/30 17:01:26 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	handle_quotes(char temp, int *squotes, int *dquotes)
 		(*squotes)++;
 }
 
-
 char *remove_quotes(t_cmd *cmd, char *str)
 {
     int 	i = 0;
@@ -89,7 +88,6 @@ char *remove_quotes(t_cmd *cmd, char *str)
     cleaned[j] = '\0';
     return cleaned;
 }
-
 
 // void clean_quote(t_cmd *cmd)
 // {

@@ -6,25 +6,26 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:27:10 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 20:38:41 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:12:34 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	pipe_connect(t_cmd *cmd, t_executor *executor, int check, int i)
+void pipe_connect(t_cmd *cmd, t_executor *executor, int check, int i)
 {
-	if (cmd->executor == executor)
-		dup2(cmd->fd[i][1], STDOUT_FILENO);
-	else if (executor->next == NULL)
-		dup2(cmd->fd[i - 1][0], STDIN_FILENO);
-	else
-	{
-		dup2(cmd->fd[i - 1][0], STDIN_FILENO);
-		dup2(cmd->fd[i][1], STDOUT_FILENO);
-	}
-	close_pipe(cmd, check);
+    if (cmd->executor == executor) 
+        dup2(cmd->fd[i][1], STDOUT_FILENO);
+    else if (executor->next == NULL) 
+        dup2(cmd->fd[i - 1][0], STDIN_FILENO);
+    else
+    {
+        dup2(cmd->fd[i - 1][0], STDIN_FILENO);
+        dup2(cmd->fd[i][1], STDOUT_FILENO);
+    }
+    close_pipe(cmd, check);
 }
+
 
 void	wait_child_process(t_cmd *cmd, int check)
 {
@@ -62,7 +63,7 @@ void	duplication(t_cmd *cmd, t_executor *executor, int check, int i)
 	if (files->fd_output >= 2)
 		dup2(files->fd_output, STDOUT_FILENO);
 	if (files->fd_input >= 2)
-		dup2(files->fd_input, STDIN_FILENO);
+		dup2(files->fd_input, STDIN_FILENO);	
 }
 
 static void	file_check_exec(t_cmd *cmd, t_executor *exec)

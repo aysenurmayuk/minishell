@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:14:38 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/11 18:44:33 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:19:46 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	ft_exit(t_cmd *cmd)
 		{
 			if (ft_isnumeric(remove_quotes(cmd, cmd->command[0][1])))
 			{
-				g_globals_exit = ft_atoi(cmd->command[0][1]);
-				g_globals_exit = g_globals_exit % 256;
-				ft_exit_error("exit\n", g_globals_exit);
+				cmd->status = ft_atoi(cmd->command[0][1]);
+				cmd->status = cmd->status % 256;
+				ft_exit_error("exit\n", cmd->status);
 			}
 			else
 			{

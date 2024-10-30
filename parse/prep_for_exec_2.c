@@ -6,22 +6,22 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:43:34 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 16:47:40 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/27 11:42:23 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	ft_check_redirect(char *arg)
+static int	check_redirect(char *arg)
 {
-	if (ft_strcmp(arg, ">") == 0 || ft_strcmp(arg, "<") == 0
-		|| ft_strcmp(arg, "<<") == 0 || ft_strcmp(arg, ">>") == 0)
+	if (ft_strcmp(arg, ">") == 0 || ft_strcmp(arg, "<") == 0 || ft_strcmp(arg,
+			"<<") == 0 || ft_strcmp(arg, ">>") == 0)
 		return (1);
 	else
 		return (0);
 }
 
-char	**ft_find_cmd(char **arg, int len)
+static char	**find_argv(char **arg, int len)
 {
 	int		i;
 	char	**cmd;
@@ -34,23 +34,23 @@ char	**ft_find_cmd(char **arg, int len)
 	{
 		if (i == 0)
 		{
-			if (ft_check_redirect(arg[i]) == 1)
+			if (check_redirect(arg[i]) == 1)
 				i++;
 			else
 				cmd[j++] = ft_strdup(arg[i]);
 		}
 		else
 		{
-			if (ft_check_redirect(arg[i]) == 1)
+			if (check_redirect(arg[i]) == 1)
 				i++;
-			else if (ft_check_redirect(arg[i -1]) == 0)
+			else if (check_redirect(arg[i - 1]) == 0)
 				cmd[j++] = ft_strdup(arg[i]);
 		}
 	}
 	return (cmd);
 }
 
-int	ft_cmd_len(char **arg)
+static int	argv_len(char **arg)
 {
 	int	i;
 	int	len;
@@ -77,8 +77,34 @@ char	**fill_argv(char **arg)
 	int		len;
 	char	**cmd;
 
-	len = ft_cmd_len(arg);
-	cmd = ft_find_cmd(arg, len);
+	len = argv_len(arg);
+	cmd = find_argv(arg, len);
 	cmd[len] = NULL;
 	return (cmd);
+}
+
+char	**clean_argv(char **str)
+{
+	int		i;
+	int		j;
+	char	**dest;
+	int		len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	dest = malloc(sizeof(char *) * (len + 1));
+	dest[len] = NULL;
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if ((ft_strchr(str[i], '>') || ft_strchr(str[i], '<'))
+			&& (ft_strchr(str[i], '"') || ft_strchr(str[i], '\'')))
+			dest[j++] = ft_substr(str[i], 1, ft_strlen(str[i]) - 2);
+		else
+			dest[j++] = ft_strdup(str[i]);
+	}
+	free_double(str);
+	return (dest);
 }

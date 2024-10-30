@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 17:15:29 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 15:50:21 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:01:49 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,19 @@ void	executer_error(char **cmd, char *s, int exit_code)
 	write(2, s, ft_strlen(s));
 	write(2, "\n", 1);
 	exit(exit_code);
+}
+
+void	file_error(t_executor *executor, t_files *files)
+{
+	if(files->error == 2)
+		perror(files->output);
+	else if(files->error == 1)
+		perror(files->input);
+	if(executor->argv)
+		free_double(executor->argv);
+	if(executor->files->heredoc)
+		free(executor->files->heredoc);
+	free(executor->files->input);
+	free(executor->files->output);
+	free(executor->files);
 }

@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:29:19 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 20:35:07 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:33:43 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	take_status(t_files *files, int pid)
 {
 	int	status;
 
-	g_globals_exit = 3;
+	g_globals_exit = 4;
 	waitpid(pid, &status, 0);
 	if (status != 0)
 	{
@@ -58,7 +58,7 @@ int	handle_heredoc(t_files *files)
 	status = 0;
 	if (pid == 0)
 	{
-		g_globals_exit = 2;
+		g_globals_exit = 3;
 		while (1)
 		{
 			line = readline(">");
@@ -83,34 +83,33 @@ void	files_init_heredoc(t_files *files, char *filename)
 	close(files->fd_heredoc[0]);
 }
 
-t_files	*init_redirect(t_cmd *cmd, t_files *files)
+t_files	*init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 {
 	t_redirect	*temp;
 	
 	files = files_init(files);	
-	temp = cmd->redirect;
+	temp = cmd->executor->redirect;
 	while (temp)
 	{
 		if (temp->type == HEREDOC)
 			files_init_heredoc(files, temp->filename);
 		temp = temp->next;
 	}
-	temp = cmd->redirect;
+	temp = executor->redirect;
 	while (temp)
 	{
 		if (temp->type == INPUT)
-		{
 			files = files_init_input(files, temp->filename);
-			if(files->error == 1)
-				return(files);
-		}
 		else if (temp->type == APPEND)
 			files = files_init_append(files, temp->filename);
 		else if (temp->type == OUTPUT)
 			files = files_init_output(files, temp->filename);
 		if(files->error == 2)
 			return(files);
+		printf("tmp:%d\n", temp->type);
 		temp = temp->next;
 	}
 	return(files);
 }
+
+

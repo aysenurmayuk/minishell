@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/21 20:45:25 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:55:12 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ static int	search_list(t_env **list, char *key, char *value)
 		if (ft_strcmp(current->key, key) == 0)
 		{
 			if (value)
-			{
-				// free(current->value);
 				current->value = ft_strdup(value);
-			}
 			return (1);
 		}
 		current = current->next;

@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 19:24:09 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:15:37 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,14 @@ static void	ft_execve(t_cmd *cmd, t_executor *executor, int check, int i)
 	char	*path;
 
 	duplication(cmd, executor, check, i);
-	if (check > 0 && cmd->pipe_count == 1)
+	if (check > 0 && cmd->pipe_count > 1)
 	{
 		builtin_handle(cmd, executor);
-		exit(0); // fee(cmd->line); ??
+		exit(0);
 	}
 	path = get_path(cmd, executor);
 	if (path == NULL && executor->argv[0] != NULL)
-	{
-		executer_error(executor->argv, "..command not found", 127);
-	}
+		executer_error(executor->argv, " command not found", 127);
 	exit(0);
 }
 
@@ -71,14 +69,24 @@ void	ft_executor(t_cmd *cmd, int i)
 	temp = cmd->executor;
 	while (temp)
 	{
-		check = builtin_check(cmd);
+		redirect_handle(cmd, temp, &i);
+		if (temp->redirect != NULL)
+			temp->files = init_redirect(cmd, temp->files, temp);
+		if(temp->files->error == 1 || temp->files->error == 2)
+		{
+			file_error(temp, temp->files);
+			continue;	
+		}
+		cmd->cleaned = remove_quotes(cmd, temp->argv[0]);
+		check = builtin_check(cmd->cleaned);
+		free(cmd->cleaned);
 		if (temp->argv)
 		{
 			if (check > 0 && cmd->pipe_count == 1)
 				builtin_handle(cmd, temp);
 			else
 			{
-				g_globals_exit = 1;
+				g_globals_exit = 2;
 				temp->pid = fork();
 				if (temp->pid == 0)
 					ft_execve(cmd, temp, check, i);

@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:48:39 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/21 16:00:10 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:04:18 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,40 +20,38 @@ void	free_env_list(t_env *env_list)
 	{
 		temp = env_list;
 		env_list = env_list->next;
-		free(temp->key);
-		free(temp->value);
+		if(temp->key)
+			free(temp->key);
+		if(temp->value)
+			free(temp->value);
 		free(temp);
 	}
-}
-
-void	free_triple(char ***str)
-{
-	int	i;
-	// int	j;
-
-	i = -1;
-	if (!str)
-		return ;
-	while (str[++i])
-		free_double(str[i]);
-	// {
-	// 	j = -1;
-	// 	while (str[i][++j])
-	// 		free(str[i][j]);
-	// 	free(str[i]);
-	// }
-	free(str);
 }
 
 void	free_double(char **str)
 {
 	int	i;
 
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+void	free_triple(char ***str)
+{
+	int	i;
+
 	i = -1;
 	if (!str)
 		return ;
 	while (str[++i])
-		free(str[i]);
+		free_double(str[i]);
 	free(str);
 }
 
