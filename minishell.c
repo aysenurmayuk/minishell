@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/29 14:34:29 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 20:51:24 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static void	start_program(char **env, t_cmd *cmd)
 		sep_path(cmd);
 		cmd->line = readline("minishell 🤯>");
 		if (!cmd->line)
-			break ;
+		{
+			printf("exit\n");
+			break;
+		}
 		if (cmd->line && wait_for_input(cmd) == 1)
 			add_history(cmd->line);
 		ft_parser(cmd);

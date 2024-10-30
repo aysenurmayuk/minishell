@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 14:45:22 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/23 17:37:12 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 20:03:10 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ void	free_executor(t_executor **executor)
 	{
 		temp = *executor;
 		*executor = (*executor)->next;
-		free_double(temp->argv);
-		free_files(temp->files);
+		if(temp->argv != NULL)
+			free_double(temp->argv);
+		if(temp->files)
+			free_files(temp->files);
 		free(temp);
 	}
 	*executor = NULL;

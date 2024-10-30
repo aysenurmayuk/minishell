@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 16:15:37 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 20:02:36 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ void	ft_executor(t_cmd *cmd, int i)
 		redirect_handle(cmd, temp, &i);
 		if (temp->redirect != NULL)
 			temp->files = init_redirect(cmd, temp->files, temp);
-		if(temp->files->error == 1 || temp->files->error == 2)
+		if (temp->files->error == 1 || temp->files->error == 2)
 		{
 			file_error(temp, temp->files);
-			continue;	
+			temp = temp->next;
+			continue ;
 		}
 		cmd->cleaned = remove_quotes(cmd, temp->argv[0]);
 		check = builtin_check(cmd->cleaned);

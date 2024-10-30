@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/30 17:55:12 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 21:04:06 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,19 @@ void	ft_export(t_cmd *cmd, char **key_value, char *trimmed_quote)
 	int		flag;
 
 	i = 1;
+	cmd->idx = 0;
 	while (key_value[i] != NULL)
 	{
 		trimmed_quote = remove_quotes(cmd, key_value[i]);
-		if (trimmed_quote && !ft_isalpha(trimmed_quote[0])
-			&& trimmed_quote[0] != '_')
+		while (trimmed_quote[cmd->idx])
 		{
-			printf("minishell: export: `%s': not a valid identifier\n",
-				key_value[i]);
-			i++;
-			continue ;
+			if (!ft_isalpha(trimmed_quote[cmd->idx]) || trimmed_quote[cmd->idx] != '_')
+			{
+				printf("minishell: export: `%s': not a valid identifier\n", key_value[i]);
+				i++;
+				continue ;
+			}
+			cmd->idx++;
 		}
 		if (trimmed_quote)
 		{

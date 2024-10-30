@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:29:19 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 17:33:43 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:18:41 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ t_files	*init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 			files = files_init_output(files, temp->filename);
 		if(files->error == 2)
 			return(files);
-		printf("tmp:%d\n", temp->type);
 		temp = temp->next;
 	}
 	return(files);
