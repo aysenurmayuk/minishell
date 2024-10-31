@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 20:44:17 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 20:14:37 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,56 +52,47 @@ void	handle_quotes(char temp, int *squotes, int *dquotes)
 
 char *remove_quotes(t_cmd *cmd, char *str)
 {
-    int 	i = 0;
-	int		j = 0;
-	int 	sq = 0;
-	int		dq = 0;
-	char	*cleaned;
-
-	cmd->idx = 0;
-	cmd->dquote = false;
-	cmd->squote = false;
-	while (str[cmd->idx++])
-		handle_quotes(str[cmd->idx], &sq, &dq);
-	cleaned = (char *)malloc(sizeof(char) * (ft_strlen(str) - sq - dq + 1));
-    // if (!cleaned)
-    //     return (NULL);
-	while (str[i]) 
-	{
-		if (str[i] == '\"' && !cmd->squote)
-		{
-			cmd->dquote_count++;
-			cmd->dquote = cmd->dquote_count % 2 == 1;
-			i++;
-		}
-		else if (str[i] == '\'' && !cmd->dquote)
-		{
-			cmd->squote_count++;
-			cmd->squote = cmd->squote_count % 2 == 1;
-			i++;
-		}
-		else 
-		{
+    int i = 0;
+    int j = 0;
+    int sq = 0;
+    int dq = 0;
+    char *cleaned;
+    cmd->idx = 0;
+    cmd->dquote = false;
+    cmd->squote = false;
+    while (str[cmd->idx])
+    {
+        handle_quotes(str[cmd->idx], &sq, &dq);
+        cmd->idx++;
+    }
+//	printf("sq: %d dq: %d\n", sq, dq);
+//	if(sq % 2 == 0)
+    cleaned = (char *)malloc(sizeof(char) * (ft_strlen(str) - sq - dq + 1));
+    if (!cleaned)
+        return (NULL);
+    i = 0;
+    j = 0;
+    cmd->squote_count = 0;
+    cmd->dquote_count = 0;
+    while (str[i])
+    {
+        if (str[i] == '\"' && !cmd->squote)
+        {
+            cmd->dquote_count++;
+            cmd->dquote = cmd->dquote_count % 2 == 1;
+            i++;
+        }
+        else if (str[i] == '\'' && !cmd->dquote)
+        {
+            cmd->squote_count++;
+            cmd->squote = cmd->squote_count % 2 == 1;
+            i++;
+        }
+        else
+        {
             cleaned[j++] = str[i++];
         }
     }
     cleaned[j] = '\0';
-    return cleaned;
+    return (cleaned);
 }
-
-// void clean_quote(t_cmd *cmd)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (cmd->command[i])
-// 	{
-// 		j = 0;
-// 		while (cmd->command[i][j])
-// 			cmd->cleaned[i][j] = remove_quotes(cmd, cmd->command[i][j]);
-// 			j++;
-// 		i++;
-// 	}
-
-// }

@@ -6,14 +6,12 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 16:13:20 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:11:29 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-// Yeni bir ortam değişkeni düğümü oluşturma fonksiyonu
 t_env	*create_env_node(char *key, char *value)
 {
 	t_env	*new_node;
@@ -27,7 +25,6 @@ t_env	*create_env_node(char *key, char *value)
 	return (new_node);
 }
 
-// Bağlı listeye bir düğüm ekleme fonksiyonu
 void	add_env_node(t_env **env_list, char *key, char *value)
 {
 	t_env	*new_node;
@@ -53,6 +50,7 @@ void	parse_env(t_cmd *cmd, char **envp, t_env **env_list)
 	char	*key;
 	char	*value;
 	char	*delimiter;
+	char	*temp;
 
 	i = 0;
 	while (envp[i])
@@ -62,9 +60,11 @@ void	parse_env(t_cmd *cmd, char **envp, t_env **env_list)
 		delimiter = ft_strchr(envp[i], '=');
 		if (delimiter)
 		{
-			key = ft_strndup(remove_quotes(cmd, envp[i]), delimiter - envp[i]);
-			value = ft_strdup(remove_quotes(cmd, delimiter + 1));
+			temp = remove_quotes(cmd, envp[i]);
+			key = ft_strndup(temp, delimiter - envp[i]);
+			value = remove_quotes(cmd, delimiter + 1);
 			add_env_node(env_list, key, value);
+			free(temp);
 		}
 		i++;
 	}

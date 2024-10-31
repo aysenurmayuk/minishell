@@ -6,89 +6,16 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/30 21:04:06 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:27:22 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	search_list(t_env **list, char *key, char *value)
+static void	print_export_list(t_cmd *cmd, t_env *env_list)
 {
 	t_env	*current;
-
-	current = *list;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-		{
-			if (value)
-				current->value = ft_strdup(value);
-			return (1);
-		}
-		current = current->next;
-	}
-	return (0);
-}
-
-void	ft_export(t_cmd *cmd, char **key_value, char *trimmed_quote)
-{
-	char	*delimiter;
-	char	*key;
-	char	*value;
-	int		i;
-	int		flag;
-
-	i = 1;
-	cmd->idx = 0;
-	while (key_value[i] != NULL)
-	{
-		trimmed_quote = remove_quotes(cmd, key_value[i]);
-		while (trimmed_quote[cmd->idx])
-		{
-			if (!ft_isalpha(trimmed_quote[cmd->idx]) || trimmed_quote[cmd->idx] != '_')
-			{
-				printf("minishell: export: `%s': not a valid identifier\n", key_value[i]);
-				i++;
-				continue ;
-			}
-			cmd->idx++;
-		}
-		if (trimmed_quote)
-		{
-			delimiter = ft_strchr(trimmed_quote, '=');
-			if (delimiter)
-			{
-				key = ft_strndup(trimmed_quote, delimiter - trimmed_quote);
-				value = ft_strdup(delimiter + 1);
-				flag = search_list(&cmd->env, key, value);
-				if (flag == 0)
-					add_env_node(&cmd->env, key, value);
-				else
-					search_list(&cmd->env, key, value);
-				flag = search_list(&cmd->exp, key, value);
-				if (flag == 0)
-					add_env_node(&cmd->exp, key, value);
-				else
-					search_list(&cmd->exp, key, value);
-			}
-			else
-			{
-				key = ft_strdup(trimmed_quote);
-				value = NULL;
-				flag = search_list(&cmd->exp, key, value);
-				if (flag == 0)
-					add_env_node(&cmd->exp, key, value);
-				else
-					free(key);
-			}
-			i++;
-		}
-	}
-}
-
-void	print_export_list(t_cmd *cmd, t_env *env_list)
-{
-	t_env	*current;
+	char	*temp;
 
 	current = env_list;
 	while (current)
@@ -96,7 +23,73 @@ void	print_export_list(t_cmd *cmd, t_env *env_list)
 		if (current->value != NULL)
 			printf("declare -x %s=\"%s\"\n", current->key, current->value);
 		else
-			printf("declare -x %s\n", remove_quotes(cmd, current->key));
+		{
+			temp = remove_quotes(cmd, current->key);
+			printf("declare -x %s\n", temp);
+			free(temp);
+		}
 		current = current->next;
 	}
+	cmd->status = 0;
+}
+
+static int	check_special_char(t_cmd *cmd, char *str)
+{
+	int	j;
+
+	j = 1;
+	if (str && !ft_isalpha(str[0]) && str[0] != '_')
+	{
+		executer_error(cmd->command[0], "not a valid identifier", 1);
+		cmd->status = 1;
+		return (1);
+	}
+	while (str[j] && str[j] != '=')
+	{
+		if (ft_isalnum(str[j]) && str[j] != '_')
+			j++;
+		else
+		{
+			executer_error(cmd->command[0], "not a valid identifier", 1);
+			cmd->status = 1;
+			return (1);
+		}
+	}
+	return (0);
+}
+
+void	export_helper(t_cmd *cmd, char **export_value, char *cleaned, int i)
+{
+	int		check;
+	char	*delimiter;
+
+	while (export_value[i])
+	{
+		cleaned = remove_quotes(cmd, export_value[i]);
+		check = check_special_char(cmd, cleaned);
+		if (check == 1)
+		{
+			i++;
+			continue ;
+		}
+		else if (check != 1)
+		{
+			delimiter = ft_strchr(cleaned, '=');
+			if (delimiter)
+				export_both_list(cmd, cleaned, delimiter);
+			else
+				only_export(cmd, cleaned);
+		}
+		free(cleaned);
+		if (export_value[i])
+			i++;
+	}
+}
+
+void	ft_export(t_cmd *cmd)
+{
+	if (cmd->command[0][1] == NULL)
+		print_export_list(cmd, cmd->exp);
+	else
+		export_helper(cmd, cmd->command[0], NULL, 1);
 }

@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 M_SRC = minishell.c \
 	parse/dollar.c parse/parse_utils.c parse/parse.c parse/pipe.c parse/prep_for_exec.c parse/prep_for_exec_2.c  parse/quote_check.c parse/redirect_check.c parse/redirect_utils.c parse/redirect_utils_2.c parse/redirect.c \
-	builtins/env.c builtins/exit.c builtins/pwd.c builtins/builtin_check.c builtins/echo.c builtins/cd.c builtins/export.c builtins/unset.c \
+	builtins/builtin_check.c builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/export_utils.c builtins/export.c builtins/pwd.c builtins/unset.c \
 	utils/utils.c utils/split_func.c utils/gnl.c utils/signal.c \
 	free/free.c free/free_2.c free/error.c \
 	executor/exec.c executor/exec_utils.c

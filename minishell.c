@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 20:51:24 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:59:48 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,27 @@ static void	reset_struct(t_cmd *cmd)
 	cmd->status = 0;
 }
 
-static void	start_program(char **env, t_cmd *cmd)
+static void start_program(char **env, t_cmd *cmd)
 {
-	(void)env;
-	while (1)
-	{
-		sep_path(cmd);
-		cmd->line = readline("minishell 🤯>");
-		if (!cmd->line)
-		{
-			printf("exit\n");
-			break;
-		}
-		if (cmd->line && wait_for_input(cmd) == 1)
-			add_history(cmd->line);
-		ft_parser(cmd);
-		ft_executor(cmd, 0);
-		//free_redirect(&cmd->executor->redirect);
-		free_double(cmd->sep_path);
-	}
+    (void)env;
+    while (1)
+    {
+        signal_init(MAIN_MODE);
+        sep_path(cmd);
+        cmd->line = readline("minishell>");
+        if (!cmd->line)
+        {
+            printf("exit\n");
+            break ;
+        }
+        if (cmd->line && wait_for_input(cmd) == 1)
+            add_history(cmd->line);
+        signal_init(NOTHING);
+        ft_parser(cmd);
+        ft_executor(cmd, 0);
+        // free_redirect(&cmd->executor->redirect);
+        free_double(cmd->sep_path);
+    }
 }
 
 int	main(int ac, char **av, char **env)
@@ -60,7 +62,6 @@ int	main(int ac, char **av, char **env)
 	if (!cmd)
 		return (0);
 	reset_struct(cmd);
-	signal_init();
 	parse_env(cmd, env, &cmd->env);
 	parse_env(cmd, env, &cmd->exp);
 	start_program(env, cmd);

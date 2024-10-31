@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:29:19 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 19:18:41 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 19:01:06 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	take_status(t_files *files, int pid)
 {
 	int	status;
 
-	g_globals_exit = 4;
 	waitpid(pid, &status, 0);
 	if (status != 0)
 	{
@@ -58,7 +57,7 @@ int	handle_heredoc(t_files *files)
 	status = 0;
 	if (pid == 0)
 	{
-		g_globals_exit = 3;
+		signal_init(HEREDOC_MODE);
 		while (1)
 		{
 			line = readline(">");

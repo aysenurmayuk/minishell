@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 18:03:14 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:59:53 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@
 
 # define FALSE 0
 # define TRUE 1
-# define IN_CAT 2
-# define IN_HERADOC 3
-# define IN_PARENT 4
-# define BUILTIN 9
 # define HEREDOC 10
 # define APPEND 11
 # define INPUT 12
@@ -45,7 +41,13 @@
 # define HEREDOC_PROECESS 102
 # define BUFFER_SIZE 42
 
-int						g_globals_exit;
+
+enum e_signal_mode {
+    NOTHING,
+    MAIN_MODE,
+    HEREDOC_MODE,
+    CHILD_MODE
+};
 
 typedef struct s_cmd
 {
@@ -116,7 +118,6 @@ void					add_env_node(t_env **env_list, char *key, char *value);
 char					*get_env(t_cmd *cmd, char *key, char *dollar_value);
 void					print_env_list(t_cmd *cmd, t_env *env_list,
 							t_executor *executor);
-void					print_export_list(t_cmd *cmd, t_env *env_list);
 
 // utils
 char					*get_next_line(int fd);
@@ -130,7 +131,7 @@ char					**ft_split2(char const *s, char c);
 void					ft_split_space(t_cmd *str);
 int						ft_toggle_quote(char c, int in_quote);
 void					handle_quotes(char temp, int *squotes, int *dquotes);
-void					signal_init(void);
+void    signal_init(enum e_signal_mode mode);
 
 // builtins
 int						special_char(char c);
@@ -141,8 +142,9 @@ void					ft_pwd(t_cmd *str);
 void					ft_echo(t_cmd *cmd, t_executor *executor);
 void					ft_cd(t_cmd *cmd);
 void					ft_unset(t_env **env_list, char **keys);
-void					ft_export(t_cmd *cmd, char **key_value,
-							char *trimmed_quote);
+void	ft_export(t_cmd *cmd);
+void	only_export(t_cmd *cmd, char *cleaned);
+void	export_both_list(t_cmd *cmd, char *cleaned, char *delimiter);
 void					parse_env(t_cmd *cmd, char **envp, t_env **env_list);
 
 // parse

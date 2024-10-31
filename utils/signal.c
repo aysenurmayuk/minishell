@@ -6,38 +6,41 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:42:47 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/30 16:18:06 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:59:19 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	signal_handler(int signo)
+void    handle_sigint_main(int signal)
 {
-	if (g_globals_exit == 0)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	else if (g_globals_exit == IN_CAT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-	}
-	else if (g_globals_exit == IN_HERADOC)
-	{
-		write(1, "\n", 1);
-		exit(0);
-	}
-	else if (signo == SIGQUIT)
-		return ;
-	g_globals_exit = 0;
+    (void)signal;
+    write(1, "\n", 1);
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
 }
-
-void	signal_init(void)
+void    handle_sigint_heredoc(int signal)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+    (void)signal;
+    write(1, "\n", 1);
+    exit(130);
+}
+void    handle_sigint_child(int signal)
+{
+    (void)signal;
+    write(1, "\n", 1);
+    exit(130);
+}
+void    signal_init(enum e_signal_mode mode)
+{
+    signal(SIGQUIT, SIG_IGN);
+    if (mode == MAIN_MODE)
+        signal(SIGINT, handle_sigint_main);
+    else if (mode == HEREDOC_MODE)
+        signal(SIGINT, handle_sigint_heredoc);
+    else if (mode == CHILD_MODE)
+        signal(SIGINT, handle_sigint_child);
+    else
+        signal(SIGINT, SIG_IGN);
 }

@@ -27,16 +27,12 @@ void	builtin_handle(t_cmd *cmd, t_executor *executor)
 	if (ft_strcmp(cmd->cleaned, "pwd") == 0)
 		ft_pwd(cmd);
 	if (ft_strcmp(cmd->cleaned, "export") == 0)
-	{
-		if (cmd->command[0][1] == NULL)
-			print_export_list(cmd, cmd->exp);
-		else
-			ft_export(cmd, cmd->command[0], NULL);
-	}
+			ft_export(cmd);
 	if (ft_strcmp(cmd->cleaned, "unset") == 0)
 	{
 		ft_unset(&cmd->env, &cmd->command[0][1]);
 		ft_unset(&cmd->exp, &cmd->command[0][1]);
+		cmd->status = 0;
 	}
 	free(cmd->cleaned);
 }

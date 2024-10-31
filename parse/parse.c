@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:00:57 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/29 15:00:51 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:06:42 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_parser(t_cmd *cmd)
 	ft_split_space(cmd);
 	dollar_handle(cmd);
 	add_exec_node(cmd, &cmd->executor, NULL, 0);
-	// redirect_handle(cmd);
 	free(line);
 	free(cmd->line);
 	cmd->line = NULL;
