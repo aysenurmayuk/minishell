@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 12:54:18 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 19:18:14 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	open_pipe(t_cmd *cmd)
 	int	i;
 
 	i = -1;
+	if(cmd->pipe_count == 0)
+		return;
 	fd = (int **)malloc(sizeof(int *) * cmd->pipe_count);
 	fd[cmd->pipe_count - 1] = NULL;
 	while (++i < cmd->pipe_count - 1)
@@ -74,7 +76,7 @@ void	ft_executor(t_cmd *cmd, int i)
 			temp->files = init_redirect(cmd, temp->files, temp);
 		if (temp->files->error == 1 || temp->files->error == 2)
 		{
-			file_error(temp, temp->files);
+			file_error(cmd, temp, temp->files);
 			temp = temp->next;
 			continue ;
 		}

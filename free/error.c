@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 17:15:29 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 12:49:26 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:48:34 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@ int	error_message(char *str)
 {
 	printf("%s", str);
 	return (1);
+}
+
+void	executer_error_2(char **cmd, char *s)
+{
+	write(2, "minishell: ", ft_strlen("minishell: "));
+	write(2, cmd[0], ft_strlen(cmd[0]));
+	write(2, ":", 1);
+	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
 }
 
 void	executer_error(char **cmd, char *s, int exit_code)
@@ -28,7 +37,7 @@ void	executer_error(char **cmd, char *s, int exit_code)
 	exit(exit_code);
 }
 
-void	file_error(t_executor *executor, t_files *files)
+void	file_error(t_cmd *cmd, t_executor *executor, t_files *files)
 {
 	(void)files;
 	if (files->error == 2)
@@ -43,4 +52,5 @@ void	file_error(t_executor *executor, t_files *files)
 	free(executor->files->output);
 	free(executor->files);
 	executor->files = files_init(executor->files);
+	cmd->status = 1;
 }

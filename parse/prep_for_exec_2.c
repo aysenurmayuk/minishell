@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:43:34 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 21:42:57 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:31:04 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static char	**find_argv(char **arg, int len)
 	char	**cmd;
 	int		j;
 
-	i = -1;
+	i = 0;
 	j = 0;
 	cmd = malloc(sizeof(char *) * (len + 1));
-	while (arg[++i])
+	while (arg[i])
 	{
+		if(arg[i][0] == '\0')
+			i++;
 		if (i == 0)
 		{
 			if (check_redirect(arg[i]) == 1)
@@ -39,18 +41,20 @@ static char	**find_argv(char **arg, int len)
 			else
 				cmd[j++] = ft_strdup(arg[i]);
 		}
-		else
+		else if(arg[i])
 		{
 			if (check_redirect(arg[i]) == 1)
 				i++;
 			else if (check_redirect(arg[i - 1]) == 0)
 				cmd[j++] = ft_strdup(arg[i]);
 		}
+		if(arg[i])
+			i++;
 	}
 	return (cmd);
 }
 
-static int	argv_len(char **arg)
+static int	argv_len(char **argv)
 {
 	int	i;
 	int	len;
@@ -59,13 +63,14 @@ static int	argv_len(char **arg)
 	i = 0;
 	rdr = 0;
 	len = 0;
-	while (arg[i++])
+	while (argv[len])
 		len++;
-	i = 0;
-	while (arg[i])
+	while (argv[i])
 	{
-		if (ft_strcmp(arg[i], ">") == 0 || ft_strcmp(arg[i], "<") == 0
-			|| ft_strcmp(arg[i], ">>") == 0 || ft_strcmp(arg[i], "<<") == 0)
+		if(argv[i][0] == '\0')
+			len--;
+		if (ft_strcmp(argv[i], ">") == 0 || ft_strcmp(argv[i], "<") == 0
+			|| ft_strcmp(argv[i], ">>") == 0 || ft_strcmp(argv[i], "<<") == 0)
 			rdr++;
 		i++;
 	}
@@ -83,11 +88,12 @@ char	**fill_argv(char **arg)
 	return (cmd);
 }
 
-char	**clean_argv(char **str)
+char	**clean_argv(t_cmd *cmd, char **str)
 {
 	int		i;
 	int		j;
 	char	**dest;
+	char	*temp;
 	int		len;
 
 	len = 0;
@@ -98,7 +104,11 @@ char	**clean_argv(char **str)
 	i = -1;
 	j = 0;
 	while (str[++i])
-		dest[j++] = ft_strdup(str[i]);
+	{
+		temp = ft_strtrim(str[i], " ,\t");
+		dest[j++] = remove_quotes(cmd, temp);
+		free(temp);
+	}
 	free_double(str);
 	return (dest);
 }

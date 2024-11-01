@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:33:27 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 21:45:01 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 14:10:11 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ t_files	*files_init(t_files *node)
 	return (node);
 }
 
-static t_executor	*create_exec_node(char **command)
+static t_executor	*create_exec_node(t_cmd *cmd, char **command)
 {
 	t_executor	*new_node;
 
 	new_node = malloc(sizeof(t_executor));
 	if (!new_node)
 		return (NULL);
-	new_node->argv = clean_argv(fill_argv(command));
+	new_node->argv = clean_argv(cmd, fill_argv(command));
 	new_node->files = files_init(new_node->files);
 	new_node->redirect = NULL;
 	new_node->pid = -1;
@@ -49,7 +49,7 @@ void	add_exec_node(t_cmd *cmd, t_executor **exec_list, char	***temp, int i)
 		return ;
 	while (temp[i] != NULL)
 	{
-		new_node = create_exec_node(temp[i]);
+		new_node = create_exec_node(cmd, temp[i]);
 		if (new_node == NULL)
 		{
 			cmd->status = 1;

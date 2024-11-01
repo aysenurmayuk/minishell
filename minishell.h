@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 13:39:33 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:53:18 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define HEREDOC_PROECESS 102
 # define BUFFER_SIZE 42
 
-int g_globals_exit;
+int						g_globals_exit;
 
 typedef struct s_cmd
 {
@@ -126,7 +126,7 @@ char					**ft_split2(char const *s, char c);
 void					ft_split_space(t_cmd *str);
 int						ft_toggle_quote(char c, int in_quote);
 void					handle_quotes(char temp, int *squotes, int *dquotes);
-void	signal_init(t_cmd *cmd);
+void					signal_init(void);
 
 // builtins
 int						special_char(char c);
@@ -137,9 +137,10 @@ void					ft_pwd(t_cmd *str);
 void					ft_echo(t_cmd *cmd, t_executor *executor);
 void					ft_cd(t_cmd *cmd);
 void					ft_unset(t_env **env_list, char **keys);
-void	ft_export(t_cmd *cmd);
-void	only_export(t_cmd *cmd, char *cleaned);
-void	export_both_list(t_cmd *cmd, char *cleaned, char *delimiter);
+void					ft_export(t_cmd *cmd);
+void					only_export(t_cmd *cmd, char *cleaned);
+void					export_both_list(t_cmd *cmd, char *cleaned,
+							char *delimiter);
 void					parse_env(t_cmd *cmd, char **envp, t_env **env_list);
 
 // parse
@@ -175,7 +176,7 @@ void					add_exec_node(t_cmd *cmd, t_executor **exec_list,
 t_files					*files_init(t_files *node);
 char					*get_path(t_cmd *cmd, t_executor *exec);
 void					wait_child_process(t_cmd *cmd, int check);
-char					**clean_argv(char **str);
+char					**clean_argv(t_cmd *cmd, char **str);
 char					**fill_argv(char **arg);
 
 // free
@@ -191,6 +192,6 @@ void					free_executor(t_executor **executor);
 // error
 int						error_message(char *str);
 void					executer_error(char **cmd, char *s, int exit_code);
-void					file_error(t_executor *executor, t_files *files);
-
+void					executer_error_2(char **cmd, char *s);
+void	file_error(t_cmd *cmd, t_executor *executor, t_files *files);
 #endif

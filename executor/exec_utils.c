@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:27:10 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 12:42:43 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 19:07:43 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,24 @@ void pipe_connect(t_cmd *cmd, t_executor *executor, int check, int i)
     close_pipe(cmd, check);
 }
 
-
-void	wait_child_process(t_cmd *cmd, int check)
+void    wait_child_process(t_cmd *cmd, int check)
 {
-	t_executor	*tmp;
-	int			result;
-
-	tmp = cmd->executor;
-	while (tmp)
-	{
-		waitpid(tmp->pid, &result, 0);
-		if (!(check > 0))
-			cmd->status = result / 256;
-		tmp = tmp->next;
-	}
-	free_fd(cmd);
+    t_executor  *tmp;
+    int         result;
+    tmp = cmd->executor;
+    while (tmp)
+    {
+        waitpid(tmp->pid, &result, 0);
+        if (!(check > 0))
+        {
+            cmd->status = result / 256;
+            if (WIFSIGNALED(result) && WTERMSIG(result) == SIGINT)
+                cmd->status = 130;
+        }
+        tmp = tmp->next;
+    }
+	if(cmd->executor)
+    	free_fd(cmd);
 }
 
 void	duplication(t_cmd *cmd, t_executor *executor, int check, int i)

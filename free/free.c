@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:48:39 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 19:43:27 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:31:33 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_double(char **str)
 	i = 0;
 	if (!str)
 		return ;
-	while (str[i])
+	while (str[i] != NULL)
 	{
 		free(str[i]);
 		i++;

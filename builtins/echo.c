@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:32:11 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/01 11:53:43 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:33:04 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_echo(t_cmd *cmd, t_executor *executor)
 	int		i;
 	int		n;
 	int		fd;
-	char	*temp;
 
 	n = 1;
 	i = 1;
@@ -31,9 +30,7 @@ void	ft_echo(t_cmd *cmd, t_executor *executor)
 	}
 	while (executor->argv[i])
 	{
-		temp = remove_quotes(cmd, executor->argv[i]);
-		write(fd, temp, ft_strlen(temp));
-		free(temp);
+		write(fd, executor->argv[i], ft_strlen(executor->argv[i]));
 		if (executor->argv[i + 1])
 			write(fd, " ", 1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 13:39:40 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:51:33 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	reset_struct(t_cmd *cmd)
 	cmd->env = NULL;
 	cmd->exp = NULL;
 	cmd->executor = NULL;
+	cmd->pipe_count = 0;
 	cmd->status = 0;
 }
 
@@ -37,6 +38,11 @@ static void start_program(char **env, t_cmd *cmd)
         {
             printf("exit\n");
             break ;
+        }
+        if(g_globals_exit == 23)
+        {
+            cmd->status = 1;
+            g_globals_exit = 0;
         }
         if (cmd->line && wait_for_input(cmd) == 1)
             add_history(cmd->line);
@@ -61,8 +67,7 @@ int	main(int ac, char **av, char **env)
 	if (!cmd)
 		return (0);
 	reset_struct(cmd);
-	g_globals_exit = 0;
-	signal_init(cmd);
+	signal_init();
 	parse_env(cmd, env, &cmd->env);
 	parse_env(cmd, env, &cmd->exp);
 	start_program(env, cmd);

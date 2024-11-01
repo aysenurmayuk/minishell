@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 18:42:48 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/30 16:21:10 by kgulfida         ###   ########.fr       */
+/*   Created: 2024/11/01 19:00:50 by kgulfida          #+#    #+#             */
+/*   Updated: 2024/11/01 19:01:00 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	update_env_var(t_env **env_list, char *key, char *value)
 	}
 	add_env_node(env_list, key, value);
 }
-
 static void	change_to_home(t_cmd *cmd)
 {
 	char	*home;
@@ -39,14 +38,13 @@ static void	change_to_home(t_cmd *cmd)
 	{
 		if (chdir(home) != 0)
 		{
-			printf("cd: %s: %s\n", home, strerror(errno));
+			executer_error_2(cmd->command[0], strerror(errno));
 			cmd->status = 1;
 		}
 		else
 			cmd->status = 0;
 	}
 }
-
 static void	update_pwd(t_cmd *cmd, char *oldpwd)
 {
 	char	cwd[1024];
@@ -60,21 +58,20 @@ static void	update_pwd(t_cmd *cmd, char *oldpwd)
 	}
 	else
 	{
-		printf("cd: error retrieving current directory: %s\n", strerror(errno));
+		executer_error_2(cmd->command[0], strerror(errno));
 		cmd->status = 1;
 	}
 }
-
 void	ft_cd(t_cmd *cmd)
 {
-	char *oldpwd;
+	char	*oldpwd;
 
 	oldpwd = get_env(cmd, "PWD", NULL);
 	if (!cmd->command[0][1] || ft_strcmp(cmd->command[0][1], "~") == 0)
 		change_to_home(cmd);
 	else if (chdir(cmd->command[0][1]) != 0)
 	{
-		printf("cd: %s: %s\n", cmd->command[0][1], strerror(errno));
+		executer_error_2(cmd->command[0], strerror(errno));
 		cmd->status = 1;
 	}
 	update_pwd(cmd, oldpwd);

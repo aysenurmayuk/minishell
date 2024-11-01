@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:49:36 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 14:19:30 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:15:49 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ static void	take_dollar_value(t_cmd *cmd, char **str, size_t *d, char *key)
 	dollar_after = ft_substr(*str, end, ft_strlen(*str + end));
 	line = dollar_line(dollar_before, dollar_after, dollar_value);
 	free(*str);
-	*str = ft_strdup(line);
+	// if (*line == '\0')
+	// 	*str = NULL;
+	// else
+		*str = ft_strdup(line);
 	free_dollar(dollar_before, dollar_after, dollar_value, line);
 	free(key);
 }
 
-static void	dollar_question(t_cmd 	*cmd, char **str, size_t *d)
+static void	dollar_question(t_cmd *cmd, char **str, size_t *d)
 {
 	char	*dollar_before;
 	char	*dollar_after;
@@ -68,17 +71,15 @@ static void	dollar_question(t_cmd 	*cmd, char **str, size_t *d)
 
 static void	is_dollar(t_cmd *cmd, int *i, int *j, size_t d)
 {
-	int		sq;
-	int		dq;
 	char	*str;
 
-	sq = 0;
-	dq = 0;
+	cmd->squote_count = 0;
+	cmd->dquote_count = 0;
 	str = cmd->command[*i][*j];
 	while (str[d] != '\0')
 	{
-		handle_quotes(str[d], &sq, &dq);
-		if (str[d] == '$' && sq % 2 == 0)
+		handle_quotes(str[d], &cmd->squote_count, &cmd->dquote_count);
+		if (str[d] == '$' && cmd->squote_count % 2 == 0)
 		{
 			if (str[d + 1] == '?')
 				dollar_question(cmd, &str, &d);
@@ -86,13 +87,15 @@ static void	is_dollar(t_cmd *cmd, int *i, int *j, size_t d)
 				take_dollar_value(cmd, &str, &d, NULL);
 			else
 				d++;
-			if (str[d] == '$')
+			if (str != NULL && str[d] == '$')
 				continue ;
 		}
-		if (ft_strlen(str) <= d)
+		if (str == NULL || ft_strlen(str) <= d)
 			break ;
 		d++;
 	}
+	// if (str == NULL && cmd->command[*i][*j + 1] != NULL)
+	// 	str = ft_strdup(" ");
 	cmd->command[*i][*j] = str;
 }
 
