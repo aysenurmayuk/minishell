@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_handle.c                                    :+:      :+:    :+:   */
+/*   builtin_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 15:34:28 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/17 14:12:53 by kgulfida         ###   ########.fr       */
+/*   Created: 2024/10/31 21:51:35 by kgulfida          #+#    #+#             */
+/*   Updated: 2024/10/31 21:51:47 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	builtin_handle(t_cmd *cmd, t_executor *executor)
 	if (ft_strcmp(cmd->cleaned, "pwd") == 0)
 		ft_pwd(cmd);
 	if (ft_strcmp(cmd->cleaned, "export") == 0)
-			ft_export(cmd);
+		ft_export(cmd);
 	if (ft_strcmp(cmd->cleaned, "unset") == 0)
 	{
 		ft_unset(&cmd->env, &cmd->command[0][1]);
@@ -41,8 +41,7 @@ int	builtin_check(char *cmd)
 {
 	if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "env") == 0
-		|| ft_strcmp(cmd, "ENV") == 0)
+	else if (ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "ENV") == 0)
 		return (2);
 	else if (ft_strcmp(cmd, "echo") == 0)
 		return (3);

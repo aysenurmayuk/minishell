@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:27:10 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 15:01:30 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:42:43 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,20 @@ void pipe_connect(t_cmd *cmd, t_executor *executor, int check, int i)
 }
 
 
-void    wait_child_process(t_cmd *cmd, int check)
+void	wait_child_process(t_cmd *cmd, int check)
 {
-    t_executor  *tmp;
-    int         status;
-    int         staus_check;
-    int         signal_check;
-    signal_check = false;
-    tmp = cmd->executor;
-    staus_check = 0;
-    while (tmp)
-    {
-        waitpid(tmp->pid, &staus_check, 0);
-        if (!signal_check && WIFSIGNALED(staus_check))
-            signal_check = true;
-        tmp = tmp->next;
-    }
-    while (wait(&status) != -1)
-        if (!signal_check && WIFSIGNALED(status))
-            signal_check = true;
-    if (signal_check)
-        write(1, "\n", 1);
-    if (!(check > 0))
-        cmd->status = staus_check / 256;
-    free_fd(cmd);
+	t_executor	*tmp;
+	int			result;
+
+	tmp = cmd->executor;
+	while (tmp)
+	{
+		waitpid(tmp->pid, &result, 0);
+		if (!(check > 0))
+			cmd->status = result / 256;
+		tmp = tmp->next;
+	}
+	free_fd(cmd);
 }
 
 void	duplication(t_cmd *cmd, t_executor *executor, int check, int i)

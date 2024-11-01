@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:33:27 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 19:38:31 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 21:45:01 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static t_executor	*create_exec_node(char **command)
 	if (!new_node)
 		return (NULL);
 	new_node->argv = clean_argv(fill_argv(command));
-
 	new_node->files = files_init(new_node->files);
 	new_node->redirect = NULL;
 	new_node->pid = -1;

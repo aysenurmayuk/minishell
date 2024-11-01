@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 18:59:53 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:39:33 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define FALSE 0
-# define TRUE 1
+# define IN_CAT 1
+# define IN_HERADOC 2
+# define IN_PARENT 3
 # define HEREDOC 10
 # define APPEND 11
 # define INPUT 12
@@ -41,13 +42,7 @@
 # define HEREDOC_PROECESS 102
 # define BUFFER_SIZE 42
 
-
-enum e_signal_mode {
-    NOTHING,
-    MAIN_MODE,
-    HEREDOC_MODE,
-    CHILD_MODE
-};
+int g_globals_exit;
 
 typedef struct s_cmd
 {
@@ -131,7 +126,7 @@ char					**ft_split2(char const *s, char c);
 void					ft_split_space(t_cmd *str);
 int						ft_toggle_quote(char c, int in_quote);
 void					handle_quotes(char temp, int *squotes, int *dquotes);
-void    signal_init(enum e_signal_mode mode);
+void	signal_init(t_cmd *cmd);
 
 // builtins
 int						special_char(char c);

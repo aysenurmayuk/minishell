@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 20:14:37 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 20:32:17 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ char *remove_quotes(t_cmd *cmd, char *str)
         handle_quotes(str[cmd->idx], &sq, &dq);
         cmd->idx++;
     }
-//	printf("sq: %d dq: %d\n", sq, dq);
-//	if(sq % 2 == 0)
     cleaned = (char *)malloc(sizeof(char) * (ft_strlen(str) - sq - dq + 1));
     if (!cleaned)
         return (NULL);

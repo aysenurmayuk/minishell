@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:43:34 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 19:36:08 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/10/31 21:42:57 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,7 @@ char	**clean_argv(char **str)
 	i = -1;
 	j = 0;
 	while (str[++i])
-	{
-		if ((ft_strchr(str[i], '>') || ft_strchr(str[i], '<'))
-			&& (ft_strchr(str[i], '"') || ft_strchr(str[i], '\'')))
-			dest[j++] = ft_substr(str[i], 1, ft_strlen(str[i]) - 2);
-		else
-			dest[j++] = ft_strdup(str[i]);
-	}
+		dest[j++] = ft_strdup(str[i]);
 	free_double(str);
 	return (dest);
 }

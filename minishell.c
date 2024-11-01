@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 18:59:48 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:39:40 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void start_program(char **env, t_cmd *cmd)
     (void)env;
     while (1)
     {
-        signal_init(MAIN_MODE);
+        g_globals_exit = 0;
         sep_path(cmd);
         cmd->line = readline("minishell>");
         if (!cmd->line)
@@ -40,7 +40,6 @@ static void start_program(char **env, t_cmd *cmd)
         }
         if (cmd->line && wait_for_input(cmd) == 1)
             add_history(cmd->line);
-        signal_init(NOTHING);
         ft_parser(cmd);
         ft_executor(cmd, 0);
         // free_redirect(&cmd->executor->redirect);
@@ -62,6 +61,8 @@ int	main(int ac, char **av, char **env)
 	if (!cmd)
 		return (0);
 	reset_struct(cmd);
+	g_globals_exit = 0;
+	signal_init(cmd);
 	parse_env(cmd, env, &cmd->env);
 	parse_env(cmd, env, &cmd->exp);
 	start_program(env, cmd);

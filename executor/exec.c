@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 19:28:03 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:54:18 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,11 @@ void	ft_executor(t_cmd *cmd, int i)
 				builtin_handle(cmd, temp);
 			else
 			{
+				
+				g_globals_exit = 1;
 				temp->pid = fork();
 				if (temp->pid == 0)
-				{
-					signal_init(CHILD_MODE);
 					ft_execve(cmd, temp, check, i);
-				}
 			}
 			i++;
 		}
