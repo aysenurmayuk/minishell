@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 17:15:29 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 18:48:34 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 14:44:07 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	executer_error(char **cmd, char *s, int exit_code)
 
 void	file_error(t_cmd *cmd, t_executor *executor, t_files *files)
 {
+	printf("girdim\n");
 	(void)files;
 	if (files->error == 2)
 		perror(files->output);

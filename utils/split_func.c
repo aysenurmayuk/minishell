@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 20:12:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/09/30 13:34:24 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:36:24 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ void	ft_split_space(t_cmd *cmd)
 		if (!cmd->command[cmd->idx])
 		{
 			while (cmd->idx-- > 0)
-				free(cmd->command[cmd->idx]);
-			free(cmd->command);
+				free_double(cmd->command[cmd->idx]);
 			return;
 		}
 		cmd->idx++;

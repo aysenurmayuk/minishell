@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 17:36:38 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 14:53:01 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,10 @@ void	redirect_handle(t_cmd *cmd, t_executor *temp, int *i)
 {
 	int	j;
 
-	j = -1;
-	while (cmd->command[*i][++j])
+	j = 0;
+	while (cmd->command[*i][j] && cmd->command[*i][j] != NULL)
+	{
 		is_redirect(cmd, temp, i, &j, 0);
+		j++;
+	}
 }

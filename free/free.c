@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:48:39 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 15:31:33 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:21:49 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,28 @@ void	free_double(char **str)
 	while (str[i] != NULL)
 	{
 		free(str[i]);
+		str[i] = NULL;
 		i++;
 	}
 	free(str);
+	str = NULL;
 }
 
 void	free_triple(char ***str)
 {
 	int	i;
+	int	j;
 
 	i = -1;
+	j = 0;
 	if (!str)
 		return ;
 	while (str[++i])
 		free_double(str[i]);
+	while (str[j])
+		str[j++] = NULL;
 	free(str);
+	str = NULL;
 }
 
 void	ft_full_free(t_cmd *str)

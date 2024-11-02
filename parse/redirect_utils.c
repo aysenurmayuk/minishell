@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:29:19 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 19:02:54 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:28:06 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,3 @@ t_files	*init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 	}
 	return(files);
 }
-
-

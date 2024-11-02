@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/01 14:54:08 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 13:21:47 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	check_special_char(t_cmd *cmd, char *str)
 	j = 1;
 	if (str && !ft_isalpha(str[0]) && str[0] != '_')
 	{
-		executer_error_2(cmd->command[0], "not a valid identifier");
+		executer_error_2(cmd->command[0], " not a valid identifier");
 		cmd->status = 1;
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:14:38 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 19:16:47 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 13:24:39 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void	ft_exit(t_cmd *cmd)
 		arg = remove_quotes(cmd, cmd->command[0][1]);
 		if (!ft_isnumeric(arg))
 		{
-			executer_error_2(cmd->command[0], "numeric argument required");
+			executer_error_2(cmd->command[0], " numeric argument required");
 			ft_exit_error("", 255);
 		}
 		if (cmd->command[0][2] != NULL)
 		{
-			executer_error_2(cmd->command[0], "too many arguments");
+			executer_error_2(cmd->command[0], " too many arguments");
 			cmd->status = 1;
 			return ;
 		}

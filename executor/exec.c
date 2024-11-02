@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 19:18:14 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:22:55 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ void	close_pipe(t_cmd *cmd, int check)
 	int	i;
 
 	i = 0;
+	if (!cmd->fd)
+	{
+		printf("girdim\n");
+        return;
+	}
 	while (i < cmd->pipe_count - 1)
 	{
 		if (cmd->fd[i][0])
@@ -80,19 +85,16 @@ void	ft_executor(t_cmd *cmd, int i)
 			temp = temp->next;
 			continue ;
 		}
+		if(temp->files->heredoc && temp->files->heredoc[0] != '\0' && temp->files->fd_input < 2)
+			temp->files->fd_input = -2;
 		if (temp->argv[0])
-		{
-			cmd->cleaned = remove_quotes(cmd, temp->argv[0]);
-			check = builtin_check(cmd->cleaned);
-			free(cmd->cleaned);
-		}
+			check = builtin_check(temp->argv[0]);
 		if (temp->argv && temp->argv[0])
 		{
 			if (check > 0 && cmd->pipe_count == 1)
 				builtin_handle(cmd, temp);
 			else
 			{
-				
 				g_globals_exit = 1;
 				temp->pid = fork();
 				if (temp->pid == 0)
@@ -104,4 +106,5 @@ void	ft_executor(t_cmd *cmd, int i)
 	}
 	close_pipe(cmd, check);
 	free_executor(&cmd->executor);
+
 }

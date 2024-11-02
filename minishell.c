@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 18:51:33 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:33:57 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void start_program(char **env, t_cmd *cmd)
     {
         g_globals_exit = 0;
         sep_path(cmd);
-        cmd->line = readline("minishell>");
+        cmd->line = readline("minishellcik>");
         if (!cmd->line)
         {
             printf("exit\n");
@@ -48,8 +48,11 @@ static void start_program(char **env, t_cmd *cmd)
             add_history(cmd->line);
         ft_parser(cmd);
         ft_executor(cmd, 0);
-        // free_redirect(&cmd->executor->redirect);
+        // REDIRECT FREEELEEEEE !!!!!! free_redirect(&cmd->executor->redirect);
         free_double(cmd->sep_path);
+		free_triple(cmd->command);
+		free_double(cmd->ncmd);
+		free_double(cmd->envp);
     }
 }
 
