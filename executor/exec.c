@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:22:55 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:51:45 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	close_pipe(t_cmd *cmd, int check)
 	i = 0;
 	if (!cmd->fd)
 	{
-		printf("girdim\n");
         return;
 	}
 	while (i < cmd->pipe_count - 1)
@@ -83,6 +82,7 @@ void	ft_executor(t_cmd *cmd, int i)
 		{
 			file_error(cmd, temp, temp->files);
 			temp = temp->next;
+			i++;
 			continue ;
 		}
 		if(temp->files->heredoc && temp->files->heredoc[0] != '\0' && temp->files->fd_input < 2)

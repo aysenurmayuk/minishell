@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:33:57 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:51:57 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	reset_struct(t_cmd *cmd)
 	cmd->cleaned = NULL;
 	cmd->sep_path = NULL;
 	cmd->env = NULL;
+	cmd->envp = NULL;
 	cmd->exp = NULL;
 	cmd->executor = NULL;
 	cmd->pipe_count = 0;
