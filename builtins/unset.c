@@ -3,16 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:37 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/31 12:15:26 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:46:42 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_unset(t_env **env_list, char **keys)
+static int	check_special_char_2(t_cmd *cmd, char *str)
+{
+	int	j;
+
+	j = 1;
+	if (str && !ft_isalpha(str[0]) && str[0] != '_' && str[0] != '-')
+	{
+		executer_error_2(cmd->command[0], " not a valid identifier");
+		cmd->status = 1;
+		return (1);
+	}
+	while (str[j])
+	{
+		if (ft_isalnum(str[j]) && str[j] != '_')
+			j++;
+		else
+		{
+			executer_error_2(cmd->command[0], "not a valid identifier");
+			cmd->status = 1;
+			return (1);
+		}
+	}
+	return (0);
+}
+
+void	ft_unset_helper(t_env **env_list, char **keys)
 {
 	t_env	*prev;
 	t_env	*current;
@@ -40,3 +65,32 @@ void	ft_unset(t_env **env_list, char **keys)
 		i++;
 	}
 }
+
+void	ft_unset(t_cmd *cmd)
+{
+	int		i;
+	int		check;
+	char	*cleaned;
+
+	i = 0;
+	while (cmd->command[0][i])
+	{
+		cleaned = remove_quotes(cmd, cmd->command[0][i]);
+		check = check_special_char_2(cmd, cleaned);
+		if (check == 1)
+		{
+			free(cleaned);
+			i++;
+			continue ;
+		}
+		else if (check != 1)
+		{
+			ft_unset_helper(&cmd->env, &cmd->command[0][i]);
+			ft_unset_helper(&cmd->exp, &cmd->command[0][i]);
+		}
+		free(cleaned);
+		if (cmd->command[0][i])
+			i++;
+	}
+}
+

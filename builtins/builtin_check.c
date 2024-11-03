@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 21:51:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 21:51:47 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:44:09 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ void	builtin_handle(t_cmd *cmd, t_executor *executor)
 	if (ft_strcmp(cmd->cleaned, "export") == 0)
 		ft_export(cmd);
 	if (ft_strcmp(cmd->cleaned, "unset") == 0)
-	{
-		ft_unset(&cmd->env, &cmd->command[0][1]);
-		ft_unset(&cmd->exp, &cmd->command[0][1]);
-		cmd->status = 0;
-	}
+		ft_unset(cmd);
 	free(cmd->cleaned);
 }
 

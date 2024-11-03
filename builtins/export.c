@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:32 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/02 13:21:47 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:42:26 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	export_helper(t_cmd *cmd, char **export_value, char *cleaned, int i)
 		check = check_special_char(cmd, cleaned);
 		if (check == 1)
 		{
+			free(cleaned);
 			i++;
 			continue ;
 		}

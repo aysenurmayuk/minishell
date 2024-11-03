@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/03 18:01:31 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:42:43 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void					ft_exit(t_cmd *cmd);
 void					ft_pwd(t_cmd *str);
 void					ft_echo(t_cmd *cmd, t_executor *executor);
 void					ft_cd(t_cmd *cmd);
-void					ft_unset(t_env **env_list, char **keys);
+void					ft_unset(t_cmd *cmd);
 void					ft_export(t_cmd *cmd);
 void					only_export(t_cmd *cmd, char *cleaned);
 void					export_both_list(t_cmd *cmd, char *cleaned,
