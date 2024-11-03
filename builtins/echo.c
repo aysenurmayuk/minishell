@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:32:11 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/01 15:33:04 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 12:43:29 by aysenurmayu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static int	echo_helper(char *str, char c)
+{
+	while (*str)
+	{
+		if (*str != c)
+			return (0);
+		str++;
+	}
+	return (1);
+}
 void	ft_echo(t_cmd *cmd, t_executor *executor)
 {
 	int		i;
@@ -21,10 +31,9 @@ void	ft_echo(t_cmd *cmd, t_executor *executor)
 	n = 1;
 	i = 1;
 	fd = executor->files->fd_output;
-	while (executor->argv[i] && ft_strcmp(executor->argv[i], "-n") == 0)
+	while (executor->argv[i] && executor->argv[i][0] == '-' && 
+	       echo_helper(&executor->argv[i][1], 'n'))
 	{
-		if (i > 1 && executor->argv[i + 1] == NULL)
-			return ;
 		n = 0;
 		i++;
 	}
@@ -39,3 +48,5 @@ void	ft_echo(t_cmd *cmd, t_executor *executor)
 		write(fd, "\n", 1);
 	cmd->status = 0;
 }
+
+
