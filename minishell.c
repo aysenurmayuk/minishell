@@ -3,28 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 20:51:57 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/03 18:53:16 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	reset_struct(t_cmd *cmd)
+void	reset_struct(t_cmd *cmd)
 {
 	cmd->line = NULL;
+	cmd->new_line = NULL;
 	cmd->ncmd = NULL;
 	cmd->command = NULL;
 	cmd->cleaned = NULL;
 	cmd->sep_path = NULL;
-	cmd->env = NULL;
 	cmd->envp = NULL;
-	cmd->exp = NULL;
-	cmd->executor = NULL;
 	cmd->pipe_count = 0;
-	cmd->status = 0;
 }
 
 static void start_program(char **env, t_cmd *cmd)
@@ -48,12 +45,8 @@ static void start_program(char **env, t_cmd *cmd)
         if (cmd->line && wait_for_input(cmd) == 1)
             add_history(cmd->line);
         ft_parser(cmd);
-        ft_executor(cmd, 0);
         // REDIRECT FREEELEEEEE !!!!!! free_redirect(&cmd->executor->redirect);
-        free_double(cmd->sep_path);
-		free_triple(cmd->command);
-		free_double(cmd->ncmd);
-		free_double(cmd->envp);
+        full_free(cmd);
     }
 }
 
@@ -64,7 +57,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac != 1)
 	{
-		error_message("This program does not accept arguments\n");
+		error_message(NULL, "This program does not accept arguments\n");
 		exit(0);
 	}
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
@@ -72,6 +65,10 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	reset_struct(cmd);
 	signal_init();
+	cmd->env = NULL;
+	cmd->exp = NULL;
+	cmd->executor = NULL;
+	cmd->status = 0;
 	parse_env(cmd, env, &cmd->env);
 	parse_env(cmd, env, &cmd->exp);
 	start_program(env, cmd);

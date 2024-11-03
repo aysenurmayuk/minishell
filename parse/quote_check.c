@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:07:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:02:52 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 17:57:23 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	quote_check(t_cmd *cmd, char *line)
 		cmd->idx++;
 	}
 	if(cmd->dquote_count % 2 != 0 || cmd->squote_count % 2 != 0)
-		return (error_message("Error: There is open quote!\n"));
+		return (error_message(cmd, "Error: There is open quote!\n"));
 	return (0);
 }
 

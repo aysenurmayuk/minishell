@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:11:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:57:03 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 18:52:50 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*add_space(char *input, int sq, int dq)
 	return (result);
 }
 
-static int	check_syntax_error(char *str)
+static int	check_syntax_error(t_cmd *cmd, char *str)
 {
 	char	op;
 
@@ -63,12 +63,12 @@ static int	check_syntax_error(char *str)
 		while (*str == ' ')
 			str++;
 		if (*str == '<' || *str == '>')
-			return (error_message("Error: Redirect syntax error!\n"));
+			return (error_message(cmd, "Error: Redirect syntax error!\n"));
 	}
 	return (0);
 }
 
-static int	redirect_check_helper(char *line)
+static int	redirect_check_helper(t_cmd *cmd, char *line)
 {
 	char	*str;
 
@@ -77,7 +77,7 @@ static int	redirect_check_helper(char *line)
 	{
 		if (*str == '<' || *str == '>')
 		{
-			if (check_syntax_error(str))
+			if (check_syntax_error(cmd, str))
 				return (1);
 		}
 		str++;
@@ -96,14 +96,14 @@ int	redirect_check(t_cmd *cmd, char *line)
 	tmp = line;
 	if (ft_strlen(tmp) != '\0' && (tmp[ft_strlen(tmp) - 1] == '<'
 			|| tmp[ft_strlen(tmp) - 1] == '>'))
-		return (error_message("Error: Redirect syntax error\n"));
+		return (error_message(cmd, "Error: Redirect syntax error\n"));
 	cmd->new_line = add_space(line, 0, 0);
 	while (*line)
 	{
 		handle_quotes(*line, &sq, &dq);
 		if ((*line == '<' || *line == '>') && sq % 2 == 0 && dq % 2 == 0)
 		{
-			return (redirect_check_helper(line));
+			return (redirect_check_helper(cmd, line));
 		}
 		line++;
 	}

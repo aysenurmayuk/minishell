@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 20:51:45 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/03 19:36:44 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	ft_executor(t_cmd *cmd, int i)
 	temp = cmd->executor;
 	while (temp)
 	{
+		cmd->status = 0;
 		redirect_handle(cmd, temp, &i);
 		if (temp->redirect != NULL)
 			temp->files = init_redirect(cmd, temp->files, temp);

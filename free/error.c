@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 17:15:29 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 20:49:21 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/03 17:58:08 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	error_message(char *str)
+int	error_message(t_cmd *cmd, char *str)
 {
+	cmd->status = 258;
 	printf("%s", str);
 	return (1);
 }

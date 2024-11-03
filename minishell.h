@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 18:53:18 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 18:01:31 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ t_files					*init_redirect(t_cmd *cmd, t_files *files,
 int						ft_parser(t_cmd *str);
 int						wait_for_input(t_cmd *cmd);
 int						quote_check(t_cmd *str, char *line);
-int						pipe_check(char *line);
+int						pipe_check(t_cmd *cmd, char *line);
 int						wait_for_input(t_cmd *cmd);
 int						dollar_handle(t_cmd *str);
 
@@ -180,6 +180,8 @@ char					**clean_argv(t_cmd *cmd, char **str);
 char					**fill_argv(char **arg);
 
 // free
+void					reset_struct(t_cmd *cmd);
+void					full_free(t_cmd *cmd);
 void					free_double(char **str);
 void					free_triple(char ***str);
 void					free_env_list(t_env *env_list);
@@ -190,8 +192,8 @@ void					free_redirect(t_redirect **redirect);
 void					free_executor(t_executor **executor);
 
 // error
-int						error_message(char *str);
+int						error_message(t_cmd *cmd, char *str);
 void					executer_error(char **cmd, char *s, int exit_code);
 void					executer_error_2(char **cmd, char *s);
-void	file_error(t_cmd *cmd, t_executor *executor, t_files *files);
+void					file_error(t_cmd *cmd, t_executor *executor, t_files *files);
 #endif

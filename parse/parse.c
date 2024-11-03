@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:00:57 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:34:36 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:33:52 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ int	ft_parser(t_cmd *cmd)
 	if (cmd->line[0] == '\0')
 		return (1);
 	line = ft_strtrim(cmd->line, " ,\t");
-	if (quote_check(cmd, line) || redirect_check(cmd, line) || pipe_check(line))
+	if (line[0] == '\0')
+		return (1);
+	if (quote_check(cmd, line) || redirect_check(cmd, line) || pipe_check(cmd, line))
 	{
 		free(line);
 		free(cmd->line);
+		line = NULL;
+		cmd->line = NULL;
 		return (1);
 	}
 	cmd->ncmd = ft_split2(cmd->new_line, '|');
@@ -31,26 +35,7 @@ int	ft_parser(t_cmd *cmd)
 	dollar_handle(cmd);
 	add_exec_node(cmd, &cmd->executor, NULL, 0);
 	free(line);
-	free(cmd->line);
-	cmd->line = NULL;
 	line = NULL;
+    ft_executor(cmd, 0);
 	return (0);
-}
-
-void	print_cmd(t_cmd *cmd) // silinecek fonksiyon
-{
-	int z;
-	int y;
-	z = 0;
-	while (cmd->command[z] != NULL)
-	{
-		y = 0;
-		printf("Command %d:\n", z);
-		while (cmd->command[z][y] != NULL)
-		{
-			printf("  Arg %d: %s\n", y, cmd->command[z][y]);
-			y++;
-		}
-		z++;
-	}
 }
