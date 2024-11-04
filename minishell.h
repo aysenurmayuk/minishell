@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 15:04:48 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:43:57 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char    *remove_quotes(t_cmd *cmd, char *str);
 char    **env_to_array(t_env *env_list, t_env *temp, int i, int count);
 void    sep_path(t_cmd *cmd);
 void	init_redirect(t_cmd *cmd, t_files *files, t_executor *executor);
-int     ft_parser(t_cmd *str);
+int     ft_parser(t_cmd *str, char *line);
 int     wait_for_input(t_cmd *cmd);
 int     quote_check(t_cmd *cmd, char *line, int i);
 int     pipe_check(t_cmd *cmd, char *line, int sq, int dq);

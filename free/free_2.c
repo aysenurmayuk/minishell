@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 14:45:22 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 15:13:45 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:46:01 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_fd(t_cmd *cmd)
 	}
 	cmd->fd = NULL;
 }
+
 void	free_redirect(t_redirect **redirect)
 {
 	t_redirect	*temp;
@@ -71,9 +72,9 @@ void	free_executor(t_executor **executor)
 	{
 		temp = *executor;
 		*executor = (*executor)->next;
-		if(temp->argv != NULL)
+		if (temp->argv != NULL)
 			free_double(temp->argv);
-		if(temp->files)
+		if (temp->files)
 			free_files(temp->files);
 		free_redirect(&temp->redirect);
 		free(temp);

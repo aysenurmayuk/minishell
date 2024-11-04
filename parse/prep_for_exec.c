@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_for_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:33:27 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 14:55:31 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:50:14 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_executor	*create_exec_node(t_cmd *cmd, char **command)
 	return (new_node);
 }
 
-void	add_exec_node(t_cmd *cmd, t_executor **exec_list, char	***temp, int i)
+void	add_exec_node(t_cmd *cmd, t_executor **exec_list, char ***temp, int i)
 {
 	t_executor	*new_node;
 	t_executor	*tmp_node;
@@ -54,7 +54,7 @@ void	add_exec_node(t_cmd *cmd, t_executor **exec_list, char	***temp, int i)
 		new_node = create_exec_node(cmd, temp[i]);
 		if (new_node == NULL)
 		{
-			cmd->status = 1;
+			cmd->status = 0;
 			return ;
 		}
 		if (*exec_list == NULL)

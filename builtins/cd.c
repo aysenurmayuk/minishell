@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:00:50 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 19:01:00 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:33:12 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	update_env_var(t_env **env_list, char *key, char *value)
 	}
 	add_env_node(env_list, key, value);
 }
+
 static void	change_to_home(t_cmd *cmd)
 {
 	char	*home;
@@ -45,6 +46,7 @@ static void	change_to_home(t_cmd *cmd)
 			cmd->status = 0;
 	}
 }
+
 static void	update_pwd(t_cmd *cmd, char *oldpwd)
 {
 	char	cwd[1024];
@@ -62,6 +64,7 @@ static void	update_pwd(t_cmd *cmd, char *oldpwd)
 		cmd->status = 1;
 	}
 }
+
 void	ft_cd(t_cmd *cmd)
 {
 	char	*oldpwd;

@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:37 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/04 14:07:51 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:35:28 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ static int	check_special_char_2(t_cmd *cmd, char *str)
 	return (0);
 }
 
-void	ft_unset_helper(t_env **env_list, char **keys)
+void	ft_unset_helper(t_env **env_list, char **keys, int i)
 {
 	t_env	*prev;
 	t_env	*current;
-	int		i;
 
-	i = 0;
 	while (keys && keys[i])
 	{
 		current = *env_list;
@@ -87,12 +85,11 @@ void	ft_unset(t_cmd *cmd)
 		}
 		else if (check != 1)
 		{
-			ft_unset_helper(&cmd->env, &cmd->command[0][i]);
-			ft_unset_helper(&cmd->exp, &cmd->command[0][i]);
+			ft_unset_helper(&cmd->env, &cmd->command[0][i], 0);
+			ft_unset_helper(&cmd->exp, &cmd->command[0][i], 0);
 		}
 		free(cleaned);
 		if (cmd->command[0][i])
 			i++;
 	}
 }
-

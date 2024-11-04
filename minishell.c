@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 15:23:49 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:43:45 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void start_program(char **env, t_cmd *cmd)
         }
         if (cmd->line && wait_for_input(cmd) == 1)
             add_history(cmd->line);
-        ft_parser(cmd);
+        ft_parser(cmd, NULL);
         full_free(cmd);
 		
     }

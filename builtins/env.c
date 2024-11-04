@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:15:48 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/01 16:12:22 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:33:48 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	print_env_list(t_cmd *cmd, t_env *env_list, t_executor *executor)
 	}
 	cmd->status = 0;
 }
-
 
 char	*get_env(t_cmd *cmd, char *key, char *dollar_value)
 {

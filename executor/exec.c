@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 15:14:08 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:42:22 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ void	ft_executor(t_cmd *cmd, int i)
 		temp = temp->next;
 	}
 	close_pipe(cmd, check);
-	free_executor(&cmd->executor);// bir leaks banko buradan gelyor ? idk
+	free_executor(&cmd->executor);
 }

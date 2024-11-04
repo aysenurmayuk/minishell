@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:09:01 by amayuk            #+#    #+#             */
-/*   Updated: 2024/10/30 17:54:53 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:33:22 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_pwd(t_cmd *str)
 {
-	char *c;
+	char	*c;
 
 	c = getcwd(NULL, 0);
 	if (!c)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:29:19 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 15:05:33 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 16:53:28 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 			files_init_append(files, temp->filename);
 		else if (temp->type == OUTPUT)
 			files_init_output(files, temp->filename);
+		if(files->error == 1 || files->error == 2)
+			break;
 		temp = temp->next;
 	}
 }

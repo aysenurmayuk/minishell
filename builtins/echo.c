@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:32:11 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/03 12:43:29 by aysenurmayu      ###   ########.fr       */
+/*   Updated: 2024/11/04 17:33:41 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ static int	echo_helper(char *str, char c)
 	}
 	return (1);
 }
+
 void	ft_echo(t_cmd *cmd, t_executor *executor)
 {
-	int		i;
-	int		n;
-	int		fd;
+	int	i;
+	int	n;
+	int	fd;
 
 	n = 1;
 	i = 1;
 	fd = executor->files->fd_output;
-	while (executor->argv[i] && executor->argv[i][0] == '-' && 
-	       echo_helper(&executor->argv[i][1], 'n'))
+	while (executor->argv[i] && executor->argv[i][0] == '-'
+		&& echo_helper(&executor->argv[i][1], 'n'))
 	{
 		n = 0;
 		i++;
@@ -48,5 +49,3 @@ void	ft_echo(t_cmd *cmd, t_executor *executor)
 		write(fd, "\n", 1);
 	cmd->status = 0;
 }
-
-

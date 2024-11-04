@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:27:10 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:20:32 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:34:45 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	wait_child_process(t_cmd *cmd, int check)
 	while (tmp)
 	{
 		waitpid(tmp->pid, &result, 0);
-		if (!(check > 0))
+		if (!(check > 0) && tmp->files->error != 1 && tmp->files->error != 2)
 		{
 			if (WIFSIGNALED(result) && WTERMSIG(result) == SIGINT)
 				cmd->status = 130;

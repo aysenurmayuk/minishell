@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:48:39 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/03 17:46:21 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:45:43 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	free_env_list(t_env *env_list)
 	{
 		temp = env_list;
 		env_list = env_list->next;
-		if(temp->key)
+		if (temp->key)
 			free(temp->key);
-		if(temp->value)
+		if (temp->value)
 			free(temp->value);
 		free(temp);
 	}
@@ -64,17 +64,17 @@ void	free_triple(char ***str)
 
 void	full_free(t_cmd *cmd)
 {
-	if(cmd->line)
+	if (cmd->line)
 		free(cmd->line);
-	if(cmd->new_line)
+	if (cmd->new_line)
 		free(cmd->new_line);
-	if(cmd->ncmd)
+	if (cmd->ncmd)
 		free_double(cmd->ncmd);
-	if(cmd->sep_path)
+	if (cmd->sep_path)
 		free_double(cmd->sep_path);
-	if(cmd->envp)
+	if (cmd->envp)
 		free_double(cmd->envp);
-	if(cmd->command)
+	if (cmd->command)
 		free_triple(cmd->command);
 	reset_struct(cmd);
 }

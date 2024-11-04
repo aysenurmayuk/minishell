@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:11:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/03 18:52:50 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:50:43 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*add_space(char *input, int sq, int dq)
 	int	j;
 
 	len = (int)ft_strlen(input);
-	char *result = malloc(len * 3 + 1); // Yeterli bellek ayırma
+	char *result = malloc(len * 3 + 1);
 	if (!result)
 		return (NULL);
 	i = 0;
