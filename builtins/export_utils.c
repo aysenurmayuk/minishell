@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/31 18:09:47 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:19:13 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	search_list(t_env **list, char *key, char *value)
+int	search_list(t_env **list, char *key, char *value)
 {
 	t_env	*current;
 
@@ -22,7 +22,10 @@ static int	search_list(t_env **list, char *key, char *value)
 		if (ft_strcmp(current->key, key) == 0)
 		{
 			if (value)
+			{
+				free(current->value);
 				current->value = ft_strdup(value);
+			}
 			return (1);
 		}
 		current = current->next;
@@ -30,32 +33,27 @@ static int	search_list(t_env **list, char *key, char *value)
 	return (0);
 }
 
-void	export_both_list(t_cmd *cmd, char *cleaned, char *delimiter)
+void	export_both_list(t_cmd *cmd, char *cleaned, char *delimiter, char *key)
 {
-	char *key;
-	char *value;
-	int flag_env;
-	int flag_exp;
+	char	*value;
 
-	key = ft_strndup(cleaned, delimiter - cleaned);
 	value = ft_strdup(delimiter + 1);
-	flag_env = search_list(&cmd->env, key, value);
-	if (flag_env == 0)
-		add_env_node(&cmd->env, key, value);
-	flag_exp = search_list(&cmd->exp, key, value);
-	if (flag_exp == 0)
-		add_env_node(&cmd->exp, key, value);
+	key = ft_strndup(cleaned, delimiter - cleaned);
+	if (search_list(&cmd->env, key, value) == 0)
+		add_env_node(&cmd->env, ft_strdup(key), ft_strdup(value));
+	if (search_list(&cmd->exp, key, value) == 0)
+		add_env_node(&cmd->exp, ft_strdup(key), ft_strdup(value));
+	free(value);
+	free(key);
 }
 
 void	only_export(t_cmd *cmd, char *cleaned)
 {
-	char *key;
-	char *value;
-	int flag_exp;
-	
-	key= ft_strdup(cleaned);
-	value = NULL;
-	flag_exp = search_list(&cmd->exp, key, value);
-	if(flag_exp == 0)
-		add_env_node(&cmd->exp, key, value);
+	char	*key;
+
+	key = ft_strdup(cleaned);
+	if (search_list(&cmd->exp, key, NULL) == 0)
+		add_env_node(&cmd->exp, key, NULL);
+	else
+		free(key);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 14:53:01 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:34:41 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_redirect	*create_redirect_node(int type, char *filename)
 	new_node->type = type;
 	new_node->filename = ft_strdup(filename);
 	new_node->next = NULL;
+	free(filename);
 	return (new_node);
 }
 
@@ -113,6 +114,7 @@ static void	is_redirect(t_cmd *cmd, t_executor *temp, int *i, int *j, size_t r)
 			break ;
 		r++;
 	}
+	free(filename); // ****
 }
 
 void	redirect_handle(t_cmd *cmd, t_executor *temp, int *i)

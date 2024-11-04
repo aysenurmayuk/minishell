@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:53:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/30 17:38:51 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:00:44 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_files	*files_init_input(t_files *files, char *filename)
+void files_init_input(t_files *files, char *filename)
 {
 	int	fd;
 
@@ -24,10 +24,10 @@ t_files	*files_init_input(t_files *files, char *filename)
 	files->fd_input = fd;
 	if (files->fd_input == -1)
 		files->error = 1;
-	return (files);
+	free(filename);  // ****
 }
 
-t_files	*files_init_output(t_files *files, char *filename)
+void files_init_output(t_files *files, char *filename)
 {
 	int	fd;
 
@@ -39,10 +39,10 @@ t_files	*files_init_output(t_files *files, char *filename)
 	files->fd_output = fd;
 	if (files->fd_output == -1)
 		files->error = 2;
-	return (files);
+	free(filename);  // ****
 }
 
-t_files	*files_init_append(t_files *files, char *filename)
+void files_init_append(t_files *files, char *filename)
 {
 	int	fd;
 
@@ -54,5 +54,5 @@ t_files	*files_init_append(t_files *files, char *filename)
 	files->fd_output = fd;
 	if (files->fd_output == -1)
 		files->error = 2;
-	return (files);
+	free(filename);  // ****
 }

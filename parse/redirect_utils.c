@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:29:19 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:28:06 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:05:33 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ void	files_init_heredoc(t_cmd *cmd,t_files *files, char *filename)
 	close(files->fd_heredoc[0]);
 }
 
-t_files	*init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
+void init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 {
 	t_redirect	*temp;
 	
-	files = files_init(files);	
 	temp = cmd->executor->redirect;
 	while (temp)
 	{
@@ -97,14 +96,11 @@ t_files	*init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 	while (temp)
 	{
 		if (temp->type == INPUT)
-			files = files_init_input(files, temp->filename);
+			files_init_input(files, temp->filename);
 		else if (temp->type == APPEND)
-			files = files_init_append(files, temp->filename);
+			files_init_append(files, temp->filename);
 		else if (temp->type == OUTPUT)
-			files = files_init_output(files, temp->filename);
-		if(files->error == 2)
-			return(files);
+			files_init_output(files, temp->filename);
 		temp = temp->next;
 	}
-	return(files);
 }

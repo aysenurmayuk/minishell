@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:42:37 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/03 19:46:42 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 14:07:51 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	ft_unset_helper(t_env **env_list, char **keys)
 					prev->next = current->next;
 				else
 					*env_list = current->next;
+				free(current->key);
+				free(current->value);
 				free(current);
 				break ;
 			}

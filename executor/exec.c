@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/03 19:36:44 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:14:08 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_executor(t_cmd *cmd, int i)
 		cmd->status = 0;
 		redirect_handle(cmd, temp, &i);
 		if (temp->redirect != NULL)
-			temp->files = init_redirect(cmd, temp->files, temp);
+			init_redirect(cmd, temp->files, temp);
 		if (temp->files->error == 1 || temp->files->error == 2)
 		{
 			file_error(cmd, temp, temp->files);
@@ -106,6 +106,5 @@ void	ft_executor(t_cmd *cmd, int i)
 		temp = temp->next;
 	}
 	close_pipe(cmd, check);
-	free_executor(&cmd->executor);
-
+	free_executor(&cmd->executor);// bir leaks banko buradan gelyor ? idk
 }

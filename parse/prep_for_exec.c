@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_for_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:33:27 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:44:00 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:55:31 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ t_files	*files_init(t_files *node)
 {
 	node = (t_files *)malloc(sizeof(t_files));
 	node->error = 0;
-	node->output = ft_strdup("");
-	node->input = ft_strdup("");
+	node->output = NULL;
+	node->input = NULL;
 	node->heredoc = NULL;
 	node->fd_input = 0;
 	node->fd_output = 1;
+	node->output = NULL;
+	node->input = NULL;
 	return (node);
 }
 
