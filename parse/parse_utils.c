@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:23:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 17:46:46 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 20:30:11 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,13 @@ int	wait_for_input(t_cmd *cmd)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r')
+		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 20:12:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 15:36:24 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 20:29:43 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_split_space(t_cmd *cmd)
 		cmd->pipe_count++;
 	cmd->command = (char ***)malloc((cmd->pipe_count + 1) * sizeof(char **));
 	if (!cmd->command)
-		return;
+		return ;
 	while (cmd->ncmd[cmd->idx])
 	{
 		cmd->command[cmd->idx] = ft_split2(cmd->ncmd[cmd->idx], ' ');
@@ -93,7 +93,7 @@ void	ft_split_space(t_cmd *cmd)
 		{
 			while (cmd->idx-- > 0)
 				free_double(cmd->command[cmd->idx]);
-			return;
+			return ;
 		}
 		cmd->idx++;
 	}

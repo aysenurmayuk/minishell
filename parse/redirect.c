@@ -6,7 +6,7 @@
 /*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 14:34:41 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/04 20:48:02 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_redirect	*create_redirect_node(int type, char *filename)
 	new_node->type = type;
 	new_node->filename = ft_strdup(filename);
 	new_node->next = NULL;
+	new_node->flag = 1;
 	free(filename);
 	return (new_node);
 }
@@ -69,22 +70,6 @@ static char	*extract_filename(char *str, int sq, int dq)
 	ft_strncpy(filename, str + start, end - start);
 	filename[end - start] = '\0';
 	return (filename);
-}
-
-static int	redirect_type(char *str, int r)
-{
-	int	type;
-
-	type = 0;
-	if (str[r] == '>' && str[r + 1] == '>')
-		type = APPEND;
-	else if (str[r] == '<' && str[r + 1] == '<')
-		type = HEREDOC;
-	else if (str[r] == '>')
-		type = OUTPUT;
-	else if (str[r] == '<')
-		type = INPUT;
-	return (type);
 }
 
 static void	is_redirect(t_cmd *cmd, t_executor *temp, int *i, int *j, size_t r)

@@ -3,23 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:11:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 17:50:43 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 21:16:32 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static void	process_quotes_and_spaces(char *result, char *input, int *i, int *j)
+{
+	if ((input[*i] == '>' && input[*i + 1] == '>') || (input[*i] == '<'
+			&& input[*i + 1] == '<'))
+	{
+		result[(*j)++] = input[*i];
+		result[(*j)++] = input[++(*i)];
+	}
+	else
+		result[(*j)++] = input[*i];
+	if (input[*i + 1] != ' ' && input[*i + 1] != '\0')
+		result[(*j)++] = ' ';
+}
+
 static char	*add_space(char *input, int sq, int dq)
 {
-	int	len;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*result;
 
-	len = (int)ft_strlen(input);
-	char *result = malloc(len * 3 + 1);
+	result = malloc(ft_strlen(input) * 3 + 1);
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -27,20 +40,12 @@ static char	*add_space(char *input, int sq, int dq)
 	while (input[i] != '\0')
 	{
 		handle_quotes(input[i], &sq, &dq);
-		if ((input[i] == '>' || input[i] == '<') && (i == 0 || input[i
-				- 1] != '\\') && sq % 2 == 0 && dq % 2 == 0)
+		if ((input[i] == '>' || input[i] == '<') && (i == 0
+				|| input[i - 1] != '\\') && sq % 2 == 0 && dq % 2 == 0)
 		{
 			if (j > 0 && result[j - 1] != ' ')
 				result[j++] = ' ';
-			result[j++] = input[i];
-			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<'
-					&& input[i + 1] == '<'))
-			{
-				result[j++] = input[i + 1];
-				i++;
-			}
-			if (input[i + 1] != ' ' && input[i + 1] != '\0')
-				result[j++] = ' ';
+			process_quotes_and_spaces(result, input, &i, &j);
 		}
 		else
 			result[j++] = input[i];

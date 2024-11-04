@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 17:42:22 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 20:25:25 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	open_pipe(t_cmd *cmd)
 	int	i;
 
 	i = -1;
-	if(cmd->pipe_count == 0)
-		return;
+	if (cmd->pipe_count == 0)
+		return ;
 	fd = (int **)malloc(sizeof(int *) * cmd->pipe_count);
 	fd[cmd->pipe_count - 1] = NULL;
 	while (++i < cmd->pipe_count - 1)
@@ -37,7 +37,7 @@ void	close_pipe(t_cmd *cmd, int check)
 	i = 0;
 	if (!cmd->fd)
 	{
-        return;
+		return ;
 	}
 	while (i < cmd->pipe_count - 1)
 	{
@@ -66,11 +66,33 @@ static void	ft_execve(t_cmd *cmd, t_executor *executor, int check, int i)
 	exit(0);
 }
 
+static void	executor_helper(t_cmd *cmd, t_executor *temp, int *check, int *i)
+{
+	if (temp->files->heredoc && temp->files->heredoc[0] != '\0'
+		&& temp->files->fd_input < 2)
+		temp->files->fd_input = -2;
+	if (temp->argv && temp->argv[0])
+	{
+		*check = builtin_check(temp->argv[0]);
+		if (*check > 0 && cmd->pipe_count == 1)
+			builtin_handle(cmd, temp);
+		else
+		{
+			g_globals_exit = 1;
+			temp->pid = fork();
+			if (temp->pid == 0)
+				ft_execve(cmd, temp, *check, *i);
+		}
+		(*i)++;
+	}
+}
+
 void	ft_executor(t_cmd *cmd, int i)
 {
 	t_executor	*temp;
 	int			check;
 
+	check = 0;
 	open_pipe(cmd);
 	temp = cmd->executor;
 	while (temp)
@@ -86,23 +108,7 @@ void	ft_executor(t_cmd *cmd, int i)
 			i++;
 			continue ;
 		}
-		if(temp->files->heredoc && temp->files->heredoc[0] != '\0' && temp->files->fd_input < 2)
-			temp->files->fd_input = -2;
-		if (temp->argv[0])
-			check = builtin_check(temp->argv[0]);
-		if (temp->argv && temp->argv[0])
-		{
-			if (check > 0 && cmd->pipe_count == 1)
-				builtin_handle(cmd, temp);
-			else
-			{
-				g_globals_exit = 1;
-				temp->pid = fork();
-				if (temp->pid == 0)
-					ft_execve(cmd, temp, check, i);
-			}
-			i++;
-		}
+		executor_helper(cmd, temp, &check, &i);
 		temp = temp->next;
 	}
 	close_pipe(cmd, check);

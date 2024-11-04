@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aysenurmayuk <aysenurmayuk@student.42.f    +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:54:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/10/22 12:16:38 by aysenurmayu      ###   ########.fr       */
+/*   Updated: 2024/11/04 20:30:21 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*ft_strncpy(char *dest, const char *src, int n)
 	return (dest);
 }
 
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -62,6 +61,7 @@ size_t	ft_strnlen(const char *src, size_t i)
 	}
 	return (idx);
 }
+
 char	*ft_strndup(const char *s, size_t n)
 {
 	char	*dup;
@@ -74,12 +74,4 @@ char	*ft_strndup(const char *s, size_t n)
 	ft_memcpy(dup, s, len);
 	dup[len] = '\0';
 	return (dup);
-}
-
-int	ft_isspace(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-		|| c == '\r')
-		return (1);
-	return (0);
 }

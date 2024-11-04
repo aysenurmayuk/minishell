@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:27:10 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 17:34:45 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 20:25:27 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	file_check_exec(t_cmd *cmd, t_executor *exec)
 	struct stat	file;
 
 	if (stat(exec->argv[0], &file) == 0)
-	{		
+	{
 		if (S_ISREG(file.st_mode))
 		{
 			if (file.st_mode & S_IXUSR)

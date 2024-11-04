@@ -3,29 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:29:19 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 16:53:28 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/04 20:27:44 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int take_status(t_cmd *cmd, t_files *files, int pid)
+int	take_status(t_cmd *cmd, t_files *files, int pid)
 {
-    int status;
-    g_globals_exit = IN_PARENT;
-    waitpid(pid, &status, 0);
-    if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-        cmd->status = 1;
-    else
-        cmd->status = WEXITSTATUS(status);
-    close(files->fd_heredoc[1]);
-    if (cmd->status != 0)
-        return (3);
-    else
-        return (0);
+	int	status;
+
+	g_globals_exit = IN_PARENT;
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		cmd->status = 1;
+	else
+		cmd->status = WEXITSTATUS(status);
+	close(files->fd_heredoc[1]);
+	if (cmd->status != 0)
+		return (3);
+	else
+		return (0);
 }
 
 void	handle_heredoc_helper(t_files *files, char *line)
@@ -45,7 +46,7 @@ void	handle_heredoc_helper(t_files *files, char *line)
 	free(line);
 }
 
-int	handle_heredoc(t_cmd *cmd,t_files *files)
+int	handle_heredoc(t_cmd *cmd, t_files *files)
 {
 	char	*line;
 	int		pid;
@@ -68,12 +69,12 @@ int	handle_heredoc(t_cmd *cmd,t_files *files)
 	return (status);
 }
 
-void	files_init_heredoc(t_cmd *cmd,t_files *files, char *filename)
+void	files_init_heredoc(t_cmd *cmd, t_files *files, char *filename)
 {
 	files->heredoc = ft_strdup("");
 	free(files->input);
 	files->input = ft_strdup(filename);
-	files->error = handle_heredoc(cmd , files);
+	files->error = handle_heredoc(cmd, files);
 	if (files->error == 1)
 		return ;
 	free(files->heredoc);
@@ -81,15 +82,18 @@ void	files_init_heredoc(t_cmd *cmd,t_files *files, char *filename)
 	close(files->fd_heredoc[0]);
 }
 
-void init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
+void	init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 {
 	t_redirect	*temp;
-	
+
 	temp = cmd->executor->redirect;
 	while (temp)
 	{
-		if (temp->type == HEREDOC)
+		if (temp->type == HEREDOC && temp->flag == 1)
+		{
 			files_init_heredoc(cmd, files, temp->filename);
+			temp->flag = 0;
+		}
 		temp = temp->next;
 	}
 	temp = executor->redirect;
@@ -101,8 +105,8 @@ void init_redirect(t_cmd *cmd, t_files *files, t_executor *executor)
 			files_init_append(files, temp->filename);
 		else if (temp->type == OUTPUT)
 			files_init_output(files, temp->filename);
-		if(files->error == 1 || files->error == 2)
-			break;
+		if (files->error == 1 || files->error == 2)
+			break ;
 		temp = temp->next;
 	}
 }
