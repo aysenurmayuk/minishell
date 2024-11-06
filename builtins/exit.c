@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:14:38 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/02 13:24:39 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 10:04:50 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_exit(t_cmd *cmd)
 		}
 		if (cmd->command[0][2] != NULL)
 		{
+			free(arg);
 			executer_error_2(cmd->command[0], " too many arguments");
 			cmd->status = 1;
 			return ;

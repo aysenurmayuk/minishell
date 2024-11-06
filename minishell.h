@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 20:57:53 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/05 21:33:45 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_redirect
 {
 	int					type;
 	char				*filename;
-	int					flag;
 	struct s_redirect	*next;
 }						t_redirect;
 
@@ -132,7 +131,8 @@ void	parse_env(t_cmd *cmd, char **envp, t_env **env_list);
 char	*remove_quotes(t_cmd *cmd, char *str);
 char	**env_to_array(t_env *env_list, t_env *temp, int i, int count);
 void	sep_path(t_cmd *cmd);
-void	init_redirect(t_cmd *cmd, t_files *files, t_executor *executor);
+void	init_redirect(t_files *files, t_executor *executor);
+void	init_variable(int *sq, int *dq, size_t *r);
 int		ft_parser(t_cmd *str, char *line);
 int		wait_for_input(t_cmd *cmd);
 int		quote_check(t_cmd *cmd, char *line, int i);
@@ -141,14 +141,15 @@ int		wait_for_input(t_cmd *cmd);
 int		dollar_handle(t_cmd *str);
 int		redirect_check(t_cmd *cmd, char *line);
 void	redirect_handle(t_cmd *cmd, t_executor *temp, int *i);
+void	heredoc_check(t_cmd *cmd, t_files *files, int i, int *flag);
 void	files_init_append(t_files *files, char *filename);
 void	files_init_output(t_files *files, char *filename);
 void	files_init_input(t_files *files, char *filename);
 int		redirect_type(char *str, int r);
-void	ft_executor(t_cmd *cmd, int i);
+void	ft_executor(t_cmd *cmd, int i,int check, int flag);
 void	close_pipe(t_cmd *cmd, int check);
 void	duplication(t_cmd *cmd, t_executor *executor, int check, int i);
-void	pipe_connect(t_cmd *cmd, t_executor *executor, int check, int i);
+void	pipe_connect(t_cmd *cmd, t_executor *executor, int i);
 void	add_exec_node(t_cmd *cmd, t_executor **exec_list, char ***temp, int i);
 t_files	*files_init(t_files *node);
 char	*get_path(t_cmd *cmd, t_executor *exec);

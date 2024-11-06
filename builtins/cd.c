@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:00:50 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 17:33:12 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/06 10:52:59 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	ft_cd(t_cmd *cmd)
 		executer_error_2(cmd->command[0], strerror(errno));
 		cmd->status = 1;
 	}
+	system("leaks minishell");
 	update_pwd(cmd, oldpwd);
 	free(oldpwd);
 }

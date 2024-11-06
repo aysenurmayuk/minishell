@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 20:25:25 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/06 11:12:11 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	ft_execve(t_cmd *cmd, t_executor *executor, int check, int i)
 
 static void	executor_helper(t_cmd *cmd, t_executor *temp, int *check, int *i)
 {
-	if (temp->files->heredoc && temp->files->heredoc[0] != '\0'
+	if (temp->files->heredoc
 		&& temp->files->fd_input < 2)
 		temp->files->fd_input = -2;
 	if (temp->argv && temp->argv[0])
@@ -87,20 +87,20 @@ static void	executor_helper(t_cmd *cmd, t_executor *temp, int *check, int *i)
 	}
 }
 
-void	ft_executor(t_cmd *cmd, int i)
+void	ft_executor(t_cmd *cmd, int i,int check, int flag)
 {
 	t_executor	*temp;
-	int			check;
 
-	check = 0;
 	open_pipe(cmd);
 	temp = cmd->executor;
 	while (temp)
 	{
-		cmd->status = 0;
+		if(flag == 1)
+			heredoc_check(cmd, temp->files, 0, &flag);
 		redirect_handle(cmd, temp, &i);
+		cmd->status = 0;
 		if (temp->redirect != NULL)
-			init_redirect(cmd, temp->files, temp);
+			init_redirect(temp->files, temp);
 		if (temp->files->error == 1 || temp->files->error == 2)
 		{
 			file_error(cmd, temp, temp->files);

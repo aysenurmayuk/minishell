@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:27:10 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 20:25:27 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/06 09:22:20 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pipe_connect(t_cmd *cmd, t_executor *executor, int check, int i)
+void	pipe_connect(t_cmd *cmd, t_executor *executor, int i)
 {
 	if (cmd->executor == executor)
 		dup2(cmd->fd[i][1], STDOUT_FILENO);
@@ -23,7 +23,35 @@ void	pipe_connect(t_cmd *cmd, t_executor *executor, int check, int i)
 		dup2(cmd->fd[i - 1][0], STDIN_FILENO);
 		dup2(cmd->fd[i][1], STDOUT_FILENO);
 	}
-	close_pipe(cmd, check);
+}
+
+void	duplication(t_cmd *cmd, t_executor *executor, int check, int i)
+{
+	t_files	*files;
+	int		fd[2];
+
+	files = executor->files;
+	if (cmd->pipe_count > 1)
+		pipe_connect(cmd, executor, i);
+	if (files->fd_input == -2)
+	{
+		pipe(fd);
+		write(fd[1], files->heredoc, ft_strlen(files->heredoc));
+		close(fd[1]);
+		if (executor->next || ft_strcmp(executor->argv[0], "echo"))
+		{
+			close(files->fd_heredoc[1]);
+			dup2(files->fd_heredoc[0], STDIN_FILENO);
+			close(files->fd_heredoc[0]);
+		}
+		close(fd[0]);
+	}
+	if (files->fd_output >= 2)
+		dup2(files->fd_output, STDOUT_FILENO);
+	if (files->fd_input >= 2)
+		dup2(files->fd_input, STDIN_FILENO);
+	if (cmd->pipe_count > 1)
+		close_pipe(cmd, check);
 }
 
 void	wait_child_process(t_cmd *cmd, int check)
@@ -45,35 +73,6 @@ void	wait_child_process(t_cmd *cmd, int check)
 	}
 	if (cmd->executor)
 		free_fd(cmd);
-}
-
-void	duplication(t_cmd *cmd, t_executor *executor, int check, int i)
-{
-	t_files	*files;
-	int		fd[2];
-
-	files = executor->files;
-	if (cmd->pipe_count > 1)
-		pipe_connect(cmd, executor, check, i);
-	if (files->fd_input == -2)
-	{
-		pipe(fd);
-		write(fd[1], files->heredoc, ft_strlen(files->heredoc));
-		close(fd[1]);
-		if (ft_strcmp(executor->argv[0], "cat") == 0)
-		{
-			close(files->fd_heredoc[1]);
-			dup2(files->fd_heredoc[0], STDIN_FILENO);
-			close(files->fd_heredoc[0]);
-		}
-		if (executor->next || ft_strcmp(executor->argv[0], "echo"))
-			dup2(fd[0], STDOUT_FILENO);
-		close(fd[0]);
-	}
-	if (files->fd_output >= 2)
-		dup2(files->fd_output, STDOUT_FILENO);
-	if (files->fd_input >= 2)
-		dup2(files->fd_input, STDIN_FILENO);
 }
 
 static void	file_check_exec(t_cmd *cmd, t_executor *exec)

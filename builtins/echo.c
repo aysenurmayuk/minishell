@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:32:11 by amayuk            #+#    #+#             */
-/*   Updated: 2024/11/04 17:33:41 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/06 10:17:47 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	echo_helper(char *str, char c)
 {
+	if(*str == '\0')
+		return(0);
 	while (*str)
 	{
 		if (*str != c)
