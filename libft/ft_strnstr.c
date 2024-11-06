@@ -3,36 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:55:52 by kgulfida          #+#    #+#             */
-/*   Updated: 2023/12/07 16:08:33 by kgulfida         ###   ########.fr       */
+/*   Created: 2023/12/07 16:34:45 by amayuk            #+#    #+#             */
+/*   Updated: 2023/12/21 17:19:35 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t n)
+char	*ft_strnstr(char const *str, char const *to_find, size_t n)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
 	j = 0;
-	if (to_find[i] == '\0' || to_find == str)
+	if (to_find[j] == '\0')
 		return ((char *)str);
-	while (str[j])
+	while (str[i] != '\0')
 	{
-		i = 0;
-		while (str[j + i] == to_find[i] && (str[i + j]) && (i + j) < n)
-		{
-			if (to_find[i] == '\0')
-				return ((char *)&str[j]);
-			i++;
-		}
-		if (to_find[i] == '\0')
-			return ((char *)(str + j));
-		j++;
+		while (str[i + j] == to_find[j] && str[i + j] != '\0' && (i + j) < n)
+			j++;
+		if (to_find[j] == '\0')
+			return ((char *)str + i);
+		i++;
+		j = 0;
 	}
 	return (0);
 }

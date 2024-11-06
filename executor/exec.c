@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 14:19:35 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:32:20 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	close_pipe(t_cmd *cmd, int check)
 
 	i = 0;
 	if (!cmd->fd)
-	{
 		return ;
-	}
 	while (i < cmd->pipe_count - 1)
 	{
 		if (cmd->fd[i][0])
@@ -112,6 +110,5 @@ void	ft_executor(t_cmd *cmd, int i, int check, int flag)
 		executor_helper(cmd, temp, &check, &i);
 		temp = temp->next;
 	}
-	close_pipe(cmd, check);
-	free_executor(&cmd->executor);
+	free_executor(cmd, &cmd->executor, check);
 }

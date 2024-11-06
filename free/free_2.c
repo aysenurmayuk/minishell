@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 14:45:22 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 11:38:36 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:32:45 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,21 @@ static void	free_files(t_files *files)
 	free(files);
 }
 
-void	free_executor(t_executor **executor)
+void	free_executor(t_cmd *cmd, t_executor **executor, int check)
 {
 	t_executor	*temp;
 
+	close_pipe(cmd, check);
 	while (*executor)
 	{
 		temp = *executor;
 		*executor = (*executor)->next;
 		if (temp->argv != NULL)
 			free_double(temp->argv);
+		if (!temp->files->error)
+			free_redirect(&temp->redirect);
 		if (temp->files)
 			free_files(temp->files);
-		free_redirect(&temp->redirect);
 		free(temp);
 	}
 	*executor = NULL;

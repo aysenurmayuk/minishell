@@ -6,11 +6,12 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 14:12:31 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:57:19 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
+
 # define MINISHELL_H
 # include "libft/libft.h"
 # include <stdio.h>
@@ -31,13 +32,9 @@
 # define IN_CAT 1
 # define IN_HERADOC 2
 # define IN_PARENT 3
-# define HEREDOC 10
 # define APPEND 11
 # define INPUT 12
 # define OUTPUT 13
-# define C_PROCESS 101
-# define M_PROCESS 100
-# define HEREDOC_PROECESS 102
 # define BUFFER_SIZE 42
 
 int	g_globals_exit;
@@ -123,7 +120,7 @@ void	builtin_handle(t_cmd *cmd, t_executor *executor);
 void	ft_exit(t_cmd *cmd);
 void	ft_pwd(t_cmd *str);
 void	ft_echo(t_cmd *cmd, t_executor *executor);
-void	ft_cd(t_cmd *cmd);
+void	ft_cd(t_cmd *cmd, t_executor *executor);
 void	ft_unset(t_cmd *cmd);
 void	ft_export(t_cmd *cmd);
 void	only_export(t_cmd *cmd, char *cleaned);
@@ -166,9 +163,10 @@ void	free_dollar(char *dollar_before, char *dollar_after,
 			char *dollar_value, char *line);
 void	free_fd(t_cmd *cmd);
 void	free_redirect(t_redirect **redirect);
-void	free_executor(t_executor **executor);
+void	free_executor(t_cmd *cmd, t_executor **executor, int check);
 int		error_message(t_cmd *cmd, char *str);
 void	executer_error(char **cmd, char *s, int exit_code);
 void	executer_error_2(char **cmd, char *s);
 void	file_error(t_cmd *cmd, t_executor *executor, t_files *files);
+
 #endif

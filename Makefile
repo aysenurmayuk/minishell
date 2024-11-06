@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 M_SRC = minishell.c \
 	parse/dollar.c parse/parse_utils.c parse/parse.c parse/pipe.c parse/prep_for_exec.c parse/prep_for_exec_2.c  parse/quote_check.c parse/redirect_check.c parse/redirect_utils.c parse/redirect_utils_2.c parse/redirect.c parse/heredoc.c\
 	builtins/builtin_check.c builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/export_utils.c builtins/export.c builtins/pwd.c builtins/unset.c \
@@ -24,7 +24,6 @@ READLINE_INC = $(READLINE_DIR)/include
 
 READLINE_FLAGS = -L$(READLINE_DIR)/lib -I$(READLINE_INC) -lreadline -lncurses
 
-DIR = $(shell echo $(PWD))
 RM = rm -rf
 
 all: $(NAME)
@@ -37,7 +36,7 @@ $(READLINE_LIB):
 	@curl -O https://ftp.gnu.org/gnu/readline/readline-8.2-rc1.tar.gz
 	@tar -xvf readline-8.2-rc1.tar.gz
 	@$(RM) readline-8.2-rc1.tar.gz
-	@cd readline-8.2-rc1 && ./configure --prefix=$(DIR)/lib/readline && make && make install
+	@cd readline-8.2-rc1 && ./configure --prefix=/lib/readline && make && make install
 	@$(RM) readline-8.2-rc1
 	@echo "Readline library installed."
 

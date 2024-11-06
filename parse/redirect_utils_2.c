@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:53:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 14:10:45 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:05:59 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	files_init_input(t_files *files, char *filename)
 	fd = open(files->input, O_RDONLY, 0777);
 	files->fd_input = fd;
 	if (files->fd_input == -1)
+	{
 		files->error = 1;
+	}
 	free(filename);
 }
 

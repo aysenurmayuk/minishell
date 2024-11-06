@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 17:15:29 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 12:49:24 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:25:49 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,36 @@ void	executer_error(char **cmd, char *s, int exit_code)
 	exit(exit_code);
 }
 
-// static void	free_redirect_next(t_redirect *redirect)
-// {
-// 	t_redirect	*temp;
+static void	free_redirect_files(t_executor *exec)
+{
+	t_executor	*temp;
+	t_redirect	*tmpr;
+	t_redirect	*to_free;
 
-// 	while (redirect)
-// 	{
-// 		printf("**%s\n", temp->filename);
-// 		temp = redirect;
-// 		redirect = redirect->next;
-// 		free(temp->filename);
-// 		free(temp);
-// 	}
-// 	redirect = NULL;
-// }
+	temp = exec;
+	while (temp)
+	{
+		if (temp->redirect)
+		{
+			tmpr = exec->redirect->next;
+			while (tmpr)
+			{
+				if (tmpr->filename)
+					free(tmpr->filename);
+				to_free = tmpr;
+				tmpr = tmpr->next;
+				free(to_free);
+			}
+			free(exec->redirect);
+		}
+		temp = temp->next;
+	}
+}
 
 void	file_error(t_cmd *cmd, t_executor *executor, t_files *files)
 {
 	(void)files;
+	free_redirect_files(executor);
 	if (files->error == 2)
 		perror(files->output);
 	else if (files->error == 1)
@@ -67,8 +79,6 @@ void	file_error(t_cmd *cmd, t_executor *executor, t_files *files)
 	free(executor->files->input);
 	free(executor->files->output);
 	free(executor->files);
-	// if (executor->redirect->next)
-	// 	free_redirect_next(executor->redirect->next);
 	executor->files = files_init(executor->files);
 	executor->files->error = 1;
 	cmd->status = 1;

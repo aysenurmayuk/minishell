@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 21:51:35 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 10:06:20 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:59:08 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	builtin_handle(t_cmd *cmd, t_executor *executor)
 	if (ft_strcmp(cmd->cleaned, "echo") == 0)
 		ft_echo(cmd, executor);
 	if (ft_strcmp(cmd->cleaned, "cd") == 0)
-		ft_cd(cmd);
+		ft_cd(cmd, executor);
 	if (ft_strcmp(cmd->cleaned, "pwd") == 0)
 		ft_pwd(cmd);
 	if (ft_strcmp(cmd->cleaned, "export") == 0)

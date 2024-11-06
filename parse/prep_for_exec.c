@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:33:27 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 17:50:14 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:45:57 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_files	*files_init(t_files *node)
 	node->heredoc = NULL;
 	node->fd_input = 0;
 	node->fd_output = 1;
-	node->output = NULL;
-	node->input = NULL;
 	return (node);
 }
 

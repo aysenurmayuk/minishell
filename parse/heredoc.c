@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:26:34 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 14:14:08 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:02:09 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	handle_heredoc(t_cmd *cmd, t_files *files)
 
 void	files_init_heredoc(t_cmd *cmd, t_files *files, char *filename)
 {
-	files->heredoc = ft_strdup("");
 	free(files->input);
 	files->input = ft_strdup(filename);
 	files->error = handle_heredoc(cmd, files);

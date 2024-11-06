@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:55:47 by kgulfida          #+#    #+#             */
-/*   Updated: 2023/12/07 12:54:22 by kgulfida         ###   ########.fr       */
+/*   Created: 2023/12/06 18:59:17 by amayuk            #+#    #+#             */
+/*   Updated: 2023/12/21 17:19:12 by amayuk           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ size_t	ft_strlen(const char *str)
 
 	i = 0;
 	while (str[i] != '\0')
+	{
 		i++;
+	}
 	return (i);
 }
