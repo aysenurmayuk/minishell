@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:53:49 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 20:38:55 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/06 14:10:45 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ int	redirect_type(char *str, int r)
 	type = 0;
 	if (str[r] == '>' && str[r + 1] == '>')
 		type = APPEND;
-	else if (str[r] == '<' && str[r + 1] == '<')
-		type = HEREDOC;
 	else if (str[r] == '>')
 		type = OUTPUT;
-	else if (str[r] == '<')
+	else if (str[r] == '<' && str[r + 1] == '\0')
 		type = INPUT;
 	return (type);
 }

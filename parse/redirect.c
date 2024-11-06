@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:34:59 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/05 21:07:06 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:17:59 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	add_redirect_node(t_redirect **redirects, int type, char *filename)
 	t_redirect	*new;
 	t_redirect	*temp;
 
-	if (type && type != HEREDOC)
+	if (type)
 	{
 		new = create_redirect_node(type, filename);
 		if (!new)

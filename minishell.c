@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayuk <amayuk@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:53:54 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/04 20:43:57 by amayuk           ###   ########.fr       */
+/*   Updated: 2024/11/06 14:12:49 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	start_program(char **env, t_cmd *cmd)
 	while (1)
 	{
 		g_globals_exit = 0;
+		cmd->check = 0;
 		sep_path(cmd);
 		cmd->line = readline("minishellcik>");
 		if (!cmd->line)

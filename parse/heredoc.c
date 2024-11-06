@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:26:34 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/05 21:35:33 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:14:08 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	files_init_heredoc(t_cmd *cmd, t_files *files, char *filename)
 	files->error = handle_heredoc(cmd, files);
 	if (files->error == 1)
 		return ;
+	cmd->check = files->error;
 	free(files->heredoc);
 	files->heredoc = get_next_line(files->fd_heredoc[0]);
 	close(files->fd_heredoc[0]);
@@ -86,14 +87,14 @@ void	heredoc_check(t_cmd *cmd, t_files *files, int i, int *flag)
 {
 	char	*cleaned;
 	int		j;
-	
+
 	j = 0;
-	while(cmd->command[i] != NULL)
+	while (cmd->command[i] != NULL)
 	{
 		j = 0;
 		while (cmd->command[i][j] != NULL)
 		{
-			if (ft_strcmp(cmd->command[i][j], "<<") == 0)
+			if (ft_strcmp(cmd->command[i][j], "<<") == 0 && cmd->check != 3)
 			{
 				cleaned = remove_quotes(cmd, cmd->command[i][j + 1]);
 				files_init_heredoc(cmd, files, cleaned);

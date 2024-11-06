@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:52:46 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/06 11:12:11 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:19:35 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ static void	ft_execve(t_cmd *cmd, t_executor *executor, int check, int i)
 
 static void	executor_helper(t_cmd *cmd, t_executor *temp, int *check, int *i)
 {
-	if (temp->files->heredoc
-		&& temp->files->fd_input < 2)
+	if (temp->files->heredoc && temp->files->fd_input < 2)
 		temp->files->fd_input = -2;
 	if (temp->argv && temp->argv[0])
 	{
@@ -83,11 +82,11 @@ static void	executor_helper(t_cmd *cmd, t_executor *temp, int *check, int *i)
 			if (temp->pid == 0)
 				ft_execve(cmd, temp, *check, *i);
 		}
-		(*i)++;
 	}
+	(*i)++;
 }
 
-void	ft_executor(t_cmd *cmd, int i,int check, int flag)
+void	ft_executor(t_cmd *cmd, int i, int check, int flag)
 {
 	t_executor	*temp;
 
@@ -95,8 +94,10 @@ void	ft_executor(t_cmd *cmd, int i,int check, int flag)
 	temp = cmd->executor;
 	while (temp)
 	{
-		if(flag == 1)
+		if (flag == 1)
 			heredoc_check(cmd, temp->files, 0, &flag);
+		if (cmd->check == 3)
+			break ;
 		redirect_handle(cmd, temp, &i);
 		cmd->status = 0;
 		if (temp->redirect != NULL)

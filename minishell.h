@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 19:55:31 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/11/05 21:33:45 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:12:31 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_cmd
 	int					status;
 	int					flag_exp;
 	int					flag_env;
+	int					check;
 	int					**fd;
 	char				**envp;
 	struct s_env		*env;
@@ -146,7 +147,7 @@ void	files_init_append(t_files *files, char *filename);
 void	files_init_output(t_files *files, char *filename);
 void	files_init_input(t_files *files, char *filename);
 int		redirect_type(char *str, int r);
-void	ft_executor(t_cmd *cmd, int i,int check, int flag);
+void	ft_executor(t_cmd *cmd, int i, int check, int flag);
 void	close_pipe(t_cmd *cmd, int check);
 void	duplication(t_cmd *cmd, t_executor *executor, int check, int i);
 void	pipe_connect(t_cmd *cmd, t_executor *executor, int i);
